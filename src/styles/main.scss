@@ -1,0 +1,20 @@
+$c-main: #1a1a1a;
+$c-highlight: #3369f3;
+
+$bg-light: #fbfbfb;
+$bg-dark: #efefef;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  line-height: 1.2;
+}
+
+a {
+  color: $c-highlight;
+}
