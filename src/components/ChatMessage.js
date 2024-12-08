@@ -6,7 +6,7 @@ export default `<div class="chat-message">
   <div class="chat-message__textbox author{{#if (checkIfEqual author 'self')}}-{{author}}{{/if}} type-{{type}}">
     <div class="chat-message__body">
     {{#if (checkIfEqual type 'media')}}
-      <img src="{{body}}">
+      <img src="{{body}}" alt="{{body}}">
     {{/if}}
     {{#if (checkIfEqual type 'text')}}{{{body}}}{{/if}}
     </div>

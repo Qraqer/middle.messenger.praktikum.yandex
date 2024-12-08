@@ -32,7 +32,7 @@ export default `<form action="" id="newmessage">
       </div>
     </div>
     <div class="newmessage__input">
-      <input type="text" name="newmessage" class="input__message" placeholder="Сообщение">
+      <input type="text" name="message" class="input__message" placeholder="Сообщение">
     </div>
     <div class="newmessage__send">
       <button class="newmessage__send-btn" id="submit-newmessage">

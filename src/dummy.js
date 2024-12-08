@@ -342,7 +342,7 @@ export const profileData = [
     type: 'text',
     label: 'Имя в чате',
     value: 'Иван',
-    name: 'chatname'
+    name: 'display_name'
   },
   {
     type: 'text',

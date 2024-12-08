@@ -8,6 +8,9 @@
         <div class="profile__avatar-img">
           <div class="profile__avatar-no"></div>
           <div class="profile__avatar-change">Поменять аватар</div>
+          <div class="hidden">
+            <form action=""><input type="file" name="avatar"></form>
+          </div>
         </div>
         {{#if (checkIfEqual profileState 'profile')}}
         <div class="profile__name-title">Иван</div>
