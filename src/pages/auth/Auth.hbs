@@ -1,0 +1,23 @@
+<form action="" id="{{data.id}}" class="login__box">
+  <div class="login">
+    <div class="login__title">{{data.title}}</div>
+    <div class="login__form">
+      {{#each data.inputs}}
+        {{> InputSimple
+          name=this.name
+          label=this.label
+          type=this.type
+          id=this.id
+        }}
+      {{/each}}
+    </div>
+    <div class="login__btn-box">
+      {{#with data.button}}
+        {{> Button id=id text=text class=class link=link}}
+      {{/with}}
+      {{#with data.link}}
+        {{> Link link=link text=text class=class}}
+      {{/with}}
+    </div>
+  </div>
+</form>
