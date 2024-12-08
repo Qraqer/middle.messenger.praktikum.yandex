@@ -115,13 +115,17 @@ export default class App {
 
   setInputFocusHandler(event) {
       const parent = event.target.closest('.js-input');
-      if (parent) parent.classList.add('is--active');
+      if (parent) {
+        parent.classList.add('is--active');
+      }
   }
 
   setInputBlurHandler(event) {
     if (event.target.value === '') {
       const parent = event.target.closest('.js-input');
-      if (parent) parent.classList.remove('is--active');
+      if (parent) {
+        parent.classList.remove('is--active');
+      }
     }
   }
 }
