@@ -1,0 +1,28 @@
+<div class="chat">
+  <div class="chat-list">
+    <div class="chat__profile">
+      {{> Link link='profile' text='<span>Профиль</span> <span class="ico-arrow-right"></span>' class='link__simple'}}
+    </div>
+    {{> Search}}
+    <div class="chat-list__container">
+      {{#each data}}
+        {{> ChatCard
+          id=id
+          title=title
+          text=text
+          date=date
+          notRead=notRead
+        }}
+      {{/each}}
+    </div>
+  </div>
+  <div class="chat-box">
+    {{#if chat}}
+      {{#useVar chat}}
+        {{> ChatBody chat=chat }}
+      {{/useVar}}
+    {{else}}
+      <dic class="chat__empty">Выберите чат чтобы отправить сообщение</dic>
+    {{/if}}
+  </div>
+</div>
