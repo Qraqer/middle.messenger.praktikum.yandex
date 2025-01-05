@@ -48,7 +48,7 @@ export default class Block<P extends Record<string, any> = any> {
   _registerEvents(eventBus: EventBus) {
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
-    // @ts-ignore
+    // @ts-expect-error
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
@@ -189,12 +189,11 @@ export default class Block<P extends Record<string, any> = any> {
 
       const stub = block.content.querySelector(`[data-id='id-${child.id}']`);
 
-      if (!stub) {
-        return;
+      if (stub) {
+        stub.replaceWith(child.getContent()!);
       }
 
-      stub.replaceWith(child.getContent()!);
-      return;
+      return true;
     });
 
     return block.content;
