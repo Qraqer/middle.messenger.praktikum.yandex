@@ -10,4 +10,4 @@ export default `<form action="" id="formlogin" class="login__box">
       {{{link}}}
     </div>
   </div>
-</form>`
+</form>`;

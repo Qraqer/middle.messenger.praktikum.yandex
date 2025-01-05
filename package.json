@@ -11,16 +11,30 @@
     "prebuild": "tsc --noEmit",
     "build": "npm run prebuild && vite build",
     "start": "vite build && node server.cjs",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint:ts": "eslint \"**/*.ts\"",
+    "lint:ts:fix": "eslint \"**/*.ts\" --fix",
+    "lint:style": "npx stylelint **/*.scss",
+    "lint:style:fix": "npx stylelint **/*.scss --fix"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.2.0",
+    "@typescript-eslint/parser": "^7.2.0",
+    "eslint": "^8.57.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^18.0.0",
+    "eslint-plugin-import": "^2.31.0",
     "sass": "^1.82.0",
     "sass-embedded": "^1.82.0",
+    "stylelint": "^14.5.3",
+    "stylelint-config-prettier-scss": "^0.0.1",
+    "stylelint-config-standard-scss": "^5.0.0",
     "typescript": "^5.7.2",
     "vite": "^4.5.5"
   },
   "dependencies": {
     "express": "^4.21.2",
+    "handlebars": "^4.7.8",
     "vite-plugin-handlebars": "^2.0.0"
   }
 }

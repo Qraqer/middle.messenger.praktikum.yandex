@@ -10,6 +10,7 @@ export class Search extends Block {
         search.addEventListener('blur', this.setInputBlurHandler);
       }
     }, 100);
+
     return this.compile(tpl, {});
   }
 

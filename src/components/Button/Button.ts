@@ -12,22 +12,23 @@ interface IButtonProps {
 export class Button extends Block {
   constructor(props: IButtonProps) {
     super({
-      ...props
-    })
+      ...props,
+    });
   }
 
   render() {
     const props: IButtonProps = {
       id: this.props.id,
       class: this.props.class,
-      text: this.props.text
-    }
+      text: this.props.text,
+    };
     if (this.props.link) {
       props.link = this.props.link;
     }
     if (this.props.type) {
       props.type = this.props.type;
     }
+
     return this.compile(tpl, props);
   }
 }

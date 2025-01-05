@@ -44,4 +44,4 @@ export default `<div class="profile">
     </div>
   </div>
 </div>
-`
+`;

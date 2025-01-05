@@ -9,8 +9,8 @@ export class Auth extends Block {
   constructor() {
     super({
       events: {
-        submit: (event: Event) => this.submitAuth(event)
-      }
+        submit: (event: Event) => this.submitAuth(event),
+      },
     });
   }
 
@@ -21,45 +21,45 @@ export class Auth extends Block {
         id: 'login',
         name: 'login',
         type: 'text',
-        rule: 'notempty'
+        rule: 'notempty',
       }),
       password: new Input({
         label: 'Пароль',
         id: 'password',
         name: 'password',
         type: 'password',
-        rule: 'notempty'
+        rule: 'notempty',
       }),
       button: new Button({
         text: 'Войти',
         class: 'btn',
         id: 'submit-login',
         link: 'chatlist',
-        type: 'submit'
+        type: 'submit',
       }),
       link: new Link({
         class: 'align_center',
         link: 'register',
-        text: 'Впервые?'
-      })
+        text: 'Впервые?',
+      }),
     };
   }
 
   submitAuth(event: Event) {
     event.preventDefault();
     let formSuccess = true;
-    Object.values(this.children).forEach(child => {
+    Object.values(this.children).forEach((child) => {
       if (!child.props.rule || child.props.rule === '' || typeof validation[child.props.rule] === 'undefined') {
         return;
       }
       if (!focusOutById(child.id)) {
         formSuccess = false;
       }
-    })
+    });
     if (formSuccess) {
       document.dispatchEvent(new CustomEvent('changePage', {
-        detail: { link: 'chatlist' }
-      }))
+        detail: { link: 'chatlist' },
+      }));
     }
   }
 

@@ -6,8 +6,8 @@ export class SendMessage extends Block {
   constructor() {
     super({
       events: {
-        submit: (event: Event) => this.submitMessage(event)
-      }
+        submit: (event: Event) => this.submitMessage(event),
+      },
     });
   }
 
@@ -23,6 +23,7 @@ export class SendMessage extends Block {
           parent.querySelector('.input__error')?.remove();
         }
       }, 1000);
+
       return;
     }
     alert(`Сообщение с текстом ${message.value} отправлено!`);

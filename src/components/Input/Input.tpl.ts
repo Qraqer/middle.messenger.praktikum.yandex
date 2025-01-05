@@ -14,4 +14,4 @@ export default `<div class="input__box js-input" data-id="{{id}}">
   {{#if error}}
   <span class="input__error">{{error}}</span>
   {{/if}}
-</div>`
+</div>`;

@@ -6,12 +6,12 @@ import tpl from './Chats.tpl';
 export class Chats extends Block {
   constructor(props: Props) {
     super({
-      ...props
+      ...props,
     });
   }
 
   render() {
-    // const props: IChatCard = 
+    // const props: IChatCard =
     // {
     //   id: this.props.props.id,
     //   title: this.props.props.title,

@@ -11,12 +11,8 @@ import { Profile } from './pages/profile/Profile';
 //   component[0],
 //   component[1]
 // ));
-Handlebars.registerHelper('checkIfEqual', function(value1, value2) {
-  return value1 === value2;
-});
-Handlebars.registerHelper('checkIfNotEqual', function(value1, value2) {
-  return value1 != value2;
-});
+Handlebars.registerHelper('checkIfEqual', (value1, value2) => value1 === value2);
+Handlebars.registerHelper('checkIfNotEqual', (value1, value2) => value1 !== value2);
 
 export default class App {
   private appElement: HTMLElement | null = null;
@@ -27,8 +23,8 @@ export default class App {
       currentPage: 'login',
       currentChat: null,
       auth: null,
-      profileState: 'view'
-    }
+      profileState: 'view',
+    };
     this.appElement = document.getElementById('app');
   }
 
@@ -50,7 +46,7 @@ export default class App {
           menuParent.addEventListener('mouseleave', this.menuMouseLeave);
         }
       }
-    })
+    });
     document.addEventListener('changePage', ((event: CustomEvent) => {
       this.state.currentPage = event.detail.link;
       this.render();
@@ -71,7 +67,7 @@ export default class App {
   }
 
   render() {
-    const currentPage: string = this.state.currentPage;
+    const { currentPage } = this.state;
     let innerNode;
 
     switch (currentPage) {
@@ -83,12 +79,12 @@ export default class App {
         break;
       case 'chatlist':
         innerNode = new Chatlist({
-          empty: true
+          empty: true,
         });
         break;
       case 'chat':
         innerNode = new Chatlist({
-          chat: this.state.currentChat
+          chat: this.state.currentChat,
         });
         break;
       case 'profile':
@@ -96,14 +92,15 @@ export default class App {
       case 'profile-pasword':
         innerNode = new Profile({
           page: this.state.currentPage,
-          data: Dummy.profileData
+          data: Dummy.profileData,
         });
         break;
+      default:
     }
     if (this.appElement !== null && innerNode) {
       this.appElement.innerHTML = '';
       this.appElement.appendChild(
-        innerNode.getContent() as Node
+        innerNode.getContent() as Node,
       );
     }
   }

@@ -4,9 +4,11 @@
     "src/types/*.d.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "tmp/**/*.ts"
   ],
   "compilerOptions": {
+    "outDir": "dist",
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
@@ -20,6 +22,6 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
   }
 }

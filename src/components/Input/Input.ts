@@ -18,9 +18,9 @@ export class Input extends Block<IInputProps> {
       ...props,
       events: {
         focusout: () => focusOutById(this.props.id),
-        focusin: () => focusInById(this.props.id)
-      }
-    })
+        focusin: () => focusInById(this.props.id),
+      },
+    });
   }
 
   render() {
@@ -28,7 +28,7 @@ export class Input extends Block<IInputProps> {
       label: this.props.label,
       id: this.props.id,
       name: this.props.name,
-      type: this.props.type
+      type: this.props.type,
     };
     if (this.props.placeholder) {
       props.placeholder = this.props.placeholder;
@@ -39,6 +39,7 @@ export class Input extends Block<IInputProps> {
     if (this.props.rule) {
       props.rule = this.props.rule;
     }
+
     return this.compile(tpl, props);
   }
 }

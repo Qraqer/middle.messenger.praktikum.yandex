@@ -1,5 +1,5 @@
-import EventBus from './EventBus';
 import Handlebars from 'handlebars';
+import EventBus from './EventBus';
 import { Props } from '../types/global';
 
 export default class Block<P extends Record<string, any> = any> {
@@ -7,7 +7,7 @@ export default class Block<P extends Record<string, any> = any> {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
     FLOW_CDU: 'flow:component-did-update',
-    FLOW_RENDER: 'flow:render'
+    FLOW_RENDER: 'flow:render',
   } as const;
 
   private eventBus: () => EventBus;
@@ -40,7 +40,7 @@ export default class Block<P extends Record<string, any> = any> {
       } else {
         props[key] = value;
       }
-    })
+    });
 
     return { props: props as Props<P>, children };
   }
@@ -59,10 +59,10 @@ export default class Block<P extends Record<string, any> = any> {
     if (!events) {
       return;
     }
-  
+
     Object.entries(events).forEach(([name, handler]) => {
       if (handler) this._element?.addEventListener(name, handler);
-    })
+    });
   }
 
   _removeEvents(): void {
@@ -74,7 +74,7 @@ export default class Block<P extends Record<string, any> = any> {
 
     Object.entries(events).forEach(([name, handler]) => {
       if (handler) this._element?.removeEventListener(name, handler);
-    })
+    });
   }
 
   init() {
@@ -82,7 +82,7 @@ export default class Block<P extends Record<string, any> = any> {
   }
 
   protected childrenInit(): void {}
-  
+
   private _componentDidMount() {
     this.componentDidMount();
   }
@@ -104,24 +104,25 @@ export default class Block<P extends Record<string, any> = any> {
     if (nextProps) {
       Object.assign(this.props, nextProps);
     }
-  }
+  };
 
   private _makePropsproxy(props: Props) {
-
     return new Proxy(props, {
       get: (target: any, prop: string) => {
         const value = target[prop];
+
         return typeof value === 'function' ? value.bind(target) : value;
       },
       set: (target: Record<string, unknown>, prop: string, value: unknown) => {
-        const oldProps = {...target};
+        const oldProps = { ...target };
         target[prop] = value;
         this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldProps, target);
+
         return true;
       },
       deleteProperty: () => {
-        throw new Error("Нет доступа");
-      }
+        throw new Error('Нет доступа');
+      },
     });
   }
 
@@ -152,10 +153,11 @@ export default class Block<P extends Record<string, any> = any> {
 
     Object.entries(this.children).forEach(([name, child]) => {
       if (Array.isArray(child)) {
-        contextAndStubs[name] = child.map(ch => {
+        contextAndStubs[name] = child.map((ch) => {
           if (typeof ch.id === 'undefined') {
             ch.id = ch.props?.id ?? Date.now();
           }
+
           return `<div data-id=id-${ch.id}></div>`;
         }).join('');
 
@@ -172,7 +174,7 @@ export default class Block<P extends Record<string, any> = any> {
 
     block.innerHTML = Handlebars.compile(templateString)(contextAndStubs);
 
-    Object.values(this.children).forEach(child => {
+    Object.values(this.children).forEach((child) => {
       if (Array.isArray(child)) {
         child.forEach((ch) => {
           const stub = block.content.querySelector(`[data-id='id-${ch.id}']`);
@@ -192,8 +194,6 @@ export default class Block<P extends Record<string, any> = any> {
       }
 
       stub.replaceWith(child.getContent()!);
-
-      return;
     });
 
     return block.content;
@@ -250,5 +250,4 @@ export default class Block<P extends Record<string, any> = any> {
   get element() {
     return this._element;
   }
-
 }

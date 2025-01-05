@@ -5,7 +5,7 @@ export default class EventBus {
     this.listeners = {};
   }
 
-  on (event: string, callback: () => void): void {
+  on(event: string, callback: () => void): void {
     if (!this.listeners[event]) {
       this.listeners[event] = [];
     }
@@ -13,7 +13,7 @@ export default class EventBus {
     this.listeners[event].push(callback);
   }
 
-  off (event: string, callback: () => void): void {
+  off(event: string, callback: () => void): void {
     if (!this.listeners[event]) {
       throw new Error(`Отсутствует событие ${event as string}`);
     }
@@ -23,7 +23,7 @@ export default class EventBus {
     );
   }
 
-  emit (event: string, ...args: any[]): void {
+  emit(event: string, ...args: any[]): void {
     if (!this.listeners[event]) {
       return;
     }
@@ -31,6 +31,6 @@ export default class EventBus {
     this.listeners[event].forEach((listener) => {
       // @ts-ignore
       listener(...args);
-    })
+    });
   }
 }
