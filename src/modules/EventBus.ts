@@ -29,7 +29,7 @@ export default class EventBus {
     }
 
     this.listeners[event].forEach((listener) => {
-      // @ts-expect-error
+      // @ts-expect-error: unknown error for me
       listener(...args);
     });
   }
