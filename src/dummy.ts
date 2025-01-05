@@ -6,26 +6,28 @@ export const login = {
       name: 'login',
       label: 'Логин',
       type: 'text',
-      id: 'login'
+      id: 'login',
+      rule: 'login',
     },
     {
       name: 'password',
       label: 'Пароль',
       type: 'password',
-      id: 'password'
-    }
+      id: 'password',
+      rule: 'password',
+    },
   ],
   button: {
     text: 'Войти',
     class: 'btn',
     link: 'chatlist',
-    id: 'submit-login'
+    id: 'submit-login',
   },
   link: {
     text: 'Впервые?',
     class: 'align_center',
-    link: 'register'
-  }
+    link: 'register',
+  },
 };
 
 export const register = {
@@ -36,56 +38,63 @@ export const register = {
       name: 'email',
       label: 'Почта',
       type: 'text',
-      id: 'email'
+      id: 'email',
+      rule: 'email',
     },
     {
       name: 'login',
       label: 'Логин',
       type: 'text',
-      id: 'login'
+      id: 'login',
+      rule: 'login',
     },
     {
       name: 'first_name',
       label: 'Имя',
       type: 'text',
-      id: 'first_name'
+      id: 'first_name',
+      rule: 'name',
     },
     {
       name: 'second_name',
       label: 'Фамилия',
       type: 'text',
-      id: 'second_name'
+      id: 'second_name',
+      rule: 'name',
     },
     {
       name: 'phone',
       label: 'Телефон',
       type: 'text',
-      id: 'phone'
+      id: 'phone',
+      rule: 'phone',
     },
     {
       name: 'password',
       label: 'Пароль',
       type: 'password',
-      id: 'password'
+      id: 'password',
+      rule: 'password',
     },
     {
       name: 'password_check',
       label: 'Пароль (еще раз)',
       type: 'password',
-      id: 'password_check'
+      id: 'password_check',
+      rule: 'password',
     },
   ],
   button: {
     text: 'Зарегистрироваться',
     class: 'btn',
     link: 'chatlist',
-    id: 'submit-register'
+    id: 'submit-register',
   },
   link: {
     text: 'Войти',
     class: 'align_center',
-    link: 'login'
-  }
+    link: 'login',
+  },
 };
 
 export const chatlistData = [
@@ -225,86 +234,95 @@ export const chatData = {
       datetime: '11:56',
       type: 'date',
       body: '19 июня',
-      read: true
+      read: true,
     },
     {
       author: 'Вадим',
       datetime: '11:56',
       type: 'text',
-      body: 'Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой.<br><br>Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.',
-      read: true
+      body: `Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну.
+Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой
+забрали только кассеты с пленкой.<br><br>Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было
+произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.`,
+      read: true,
     },
     {
       author: 'Вадим',
       datetime: '11:56',
       type: 'media',
       body: '/img/image.jpg',
-      read: true
+      read: true,
     },
     {
       author: 'self',
       datetime: '12:00',
       type: 'text',
       body: 'Круто!',
-      read: true
+      read: true,
     },
     {
       author: 'none',
       datetime: '11:56',
       type: 'date',
       body: '20 июня',
-      read: true
+      read: true,
     },
     {
       author: 'Вадим',
       datetime: '12:56',
       type: 'text',
-      body: 'Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой.<br><br>Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.',
-      read: true
+      body: `Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну.
+Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой
+забрали только кассеты с пленкой.<br><br>Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было
+произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.`,
+      read: true,
     },
     {
       author: 'Вадим',
       datetime: '12:56',
       type: 'media',
       body: '/img/image.jpg',
-      read: true
+      read: true,
     },
     {
       author: 'self',
       datetime: '12:56',
       type: 'text',
       body: 'Круто!',
-      read: true
+      read: true,
     },
     {
       author: 'none',
       datetime: '13:00',
       type: 'date',
       body: '21 июня',
-      read: true
+      read: true,
     },
     {
       author: 'Вадим',
       datetime: '13:56',
       type: 'text',
-      body: 'Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой.<br><br>Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.',
-      read: true
+      body: `Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну.
+Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой
+забрали только кассеты с пленкой.<br><br>Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было
+произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.`,
+      read: true,
     },
     {
       author: 'Вадим',
       datetime: '13:56',
       type: 'media',
       body: '/img/image.jpg',
-      read: true
+      read: true,
     },
     {
       author: 'self',
       datetime: '14:00',
       type: 'text',
       body: 'Круто!',
-      read: true
-    }
-  ]
+      read: true,
+    },
+  ],
 };
 
 export const profileData = [
@@ -312,49 +330,55 @@ export const profileData = [
     type: 'image',
     label: 'Аватар',
     value: '',
-    name: 'avatar'
+    name: 'avatar',
   },
   {
     type: 'text',
     label: 'Почта',
     value: 'pochta@yandex.ru',
-    name: 'email'
+    name: 'email',
+    rule: 'email',
   },
   {
     type: 'text',
     label: 'Логин',
     value: 'ivanivanov',
-    name: 'login'
+    name: 'login',
+    rule: 'login',
   },
   {
     type: 'text',
     label: 'Имя',
     value: 'Иван',
-    name: 'first_name'
+    name: 'first_name',
+    rule: 'name',
   },
   {
     type: 'text',
     label: 'Фамилия',
     value: 'Иванов',
-    name: 'second_name'
+    name: 'second_name',
+    rule: 'name',
   },
   {
     type: 'text',
     label: 'Имя в чате',
     value: 'Иван',
-    name: 'display_name'
+    name: 'display_name',
   },
   {
     type: 'text',
     label: 'Телефон',
-    value: '+7 (909) 967 30 30',
-    name: 'phone'
+    value: '+79099673030',
+    name: 'phone',
+    rule: 'phone',
   },
   {
     type: 'password',
     label: 'Пароль',
     value: '12345678',
-    name: 'password'
+    name: 'password',
+    rule: 'password',
   },
 ];
 
@@ -362,29 +386,29 @@ export const chatmenu = [
   {
     text: 'Добавить пользователя',
     icon: 'icon-plus',
-    action: 'add_user'
+    action: 'add_user',
   },
   {
     text: 'Удалить пользователя',
     icon: 'icon-close',
-    action: 'delete_user'
+    action: 'delete_user',
   },
-]
+];
 
 export const attachmenu = [
   {
     text: 'Фото или Видео',
     icon: 'icon-media',
-    action: 'attach_media'
+    action: 'attach_media',
   },
   {
     text: 'Файл',
     icon: 'icon-file',
-    action: 'attach_file'
+    action: 'attach_file',
   },
   {
     text: 'Локация',
     icon: 'icon-location',
-    action: 'attach_location'
+    action: 'attach_location',
   },
-]
+];
