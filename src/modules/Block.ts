@@ -194,6 +194,7 @@ export default class Block<P extends Record<string, any> = any> {
       }
 
       stub.replaceWith(child.getContent()!);
+      return;
     });
 
     return block.content;
