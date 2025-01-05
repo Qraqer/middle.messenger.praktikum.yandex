@@ -2,6 +2,14 @@
 
 Одностраничное приложение для ведения чатов - групповых и персональных
 
+Функциональность:
+- Валидация форм
+
+Инструменты:
+- Typescript
+- Линтеры
+- Компонентный подход
+
 ## Дизайн
 
 Макеты - в Фигме:
@@ -10,10 +18,10 @@ https://www.figma.com/file/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?node-id=0%3
 ## Установка
 
 - Установить зависимости проекта: `npm install`
-
 - Собрать проект: `npm run build`
-
 - Запустить проект на localhost: `npm run start`
+- Проверка ESLint: `npm run lint:ts`
+- Проверка Styleint: `npm run lint:style`
 
 ## Ссылки
 
