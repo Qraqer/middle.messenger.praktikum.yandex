@@ -1,4 +1,4 @@
-export default `<div class="chat-card js-open-chat" data-id="{{id}}">
+export default `<div class="chat-card js-open-chat{{#if selected}} is--active{{/if}}" data-id="{{id}}">
   <div class="chat-card__avatar"></div>
   <div class="chat-card__textbox">
     <div class="chat-card__title">{{title}}</div>

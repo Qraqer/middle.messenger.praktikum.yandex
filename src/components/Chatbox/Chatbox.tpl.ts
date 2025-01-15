@@ -1,8 +1,10 @@
-export default `<div class="chat-body">
+export default `{{#if empty}}
+<div class="chat__empty">Выберите чат чтобы отправить сообщение</div>
+{{else}}<div class="chat-body">
   <div class="chat-body__titlebox">
     <div class="chat-body__namebox">
       <div class="chat-body__avatar"></div>
-      <div class="chat-body__name">{{chat.title}}</div>
+      <div class="chat-body__name">{{title}}</div>
     </div>
     <div class="chat-body__menu js-menu-parent">
       <button class="chat-body__menu-btn js-show-menu" id="chatmenu">
@@ -29,9 +31,8 @@ export default `<div class="chat-body">
     </div>
   </div>
   <div class="chat-body__mainbox">
-    {{#each chat.messages}}
-      {{> ChatMessage author=author datetime=datetime type=type body=body read=read}}
-    {{/each}}
+    {{{chatmessages}}}
   </div>
-  <div class="chat-body__newbox">{{> NewMessage }}</div>
-</div>`;
+  <div class="chat-body__newbox">{{{sendmessage}}}</div>
+</div>
+{{/if}}`;
