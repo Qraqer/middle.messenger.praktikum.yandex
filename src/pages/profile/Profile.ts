@@ -1,11 +1,11 @@
 import Block from '../../modules/Block';
 import tpl from './Profile.tpl';
-import { Props } from '../../types/global';
+import { Props, StringIndexed } from '../../types/global';
 import { Link, ILinkProps } from '../../components/Link/Link';
 import Pages from '..';
 import { withStore } from '../../hoc/withStore';
 import { profileLabels } from '../../types/const';
-import { Avatar } from '../../components/Avatar/Avatar';
+import { UserAvatar } from '../../components/Avatar/Avatar';
 import checkUser from '../../utils/checkUser';
 
 class ProfileBase extends Block {
@@ -27,7 +27,7 @@ class ProfileBase extends Block {
       link: Pages.Chatspage.url,
       inner: '',
     });
-    this.children.avatar = new Avatar({});
+    this.children.avatar = new UserAvatar({});
     this.children.links = [
       { link: Pages.ProfileEdit.url, class: 'profile__link', inner: 'Изменить данные' },
       { link: Pages.ProfilePassword.url, class: 'profile__link', inner: 'Изменить пароль' },
@@ -36,7 +36,7 @@ class ProfileBase extends Block {
   }
 
   render() {
-    const profile: Record<string, any> = {};
+    const profile: StringIndexed = {};
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     Object.entries(this.props).forEach(([key, value], _) => {
       if (key === 'avatar') return;

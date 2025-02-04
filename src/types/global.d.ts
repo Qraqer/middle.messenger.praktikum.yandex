@@ -12,6 +12,15 @@ export type Indexed<T = any> = {
   [k in (string | symbol)]: T;
 };
 
+export interface IStore {
+  user?: IUser,
+  chats: IChatInfo[],
+  currentChat: number | undefined,
+  messages: Record<number, IMessage[]>,
+  users: TChatUser[],
+  foundUsers?: IUser[]
+}
+
 export interface IProfileEdit {
   label: string,
   value: string,

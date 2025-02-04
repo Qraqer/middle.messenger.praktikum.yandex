@@ -1,10 +1,10 @@
 import Block from '../modules/Block';
 import store, { StoreEvents } from '../modules/Store';
-import { PlainObject } from '../types/global';
+import { IStore, PlainObject, StringIndexed } from '../types/global';
 
-export function withStore(mapStateToProps: (state: any) => any) {
+export function withStore(mapStateToProps: (state: IStore) => any) {
   return function wrapper(Component: typeof Block<any>) {
-    type Pr = typeof Component extends typeof Block<infer P extends Record<string, any>> ? P : any;
+    type Pr = typeof Component extends typeof Block<infer P extends StringIndexed> ? P : any;
 
     let thisState: PlainObject | null = null;
 

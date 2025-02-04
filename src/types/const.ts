@@ -1,4 +1,6 @@
-export const profileLabels: Record<string, any> = {
+import { StringIndexed } from "./global";
+
+export const profileLabels: StringIndexed = {
   login: 'Логин',
   first_name: 'Имя',
   second_name: 'Фамилия',
@@ -10,7 +12,7 @@ export const profileLabels: Record<string, any> = {
   newpassword: 'Новый пароль',
 };
 
-export const profileRules: Record<string, any> = {
+export const profileRules: StringIndexed = {
   login: 'login',
   first_name: 'name',
   second_name: 'notempty',

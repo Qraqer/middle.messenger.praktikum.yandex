@@ -1,18 +1,18 @@
 import { withStore } from '../../hoc/withStore';
 import Block from '../../modules/Block';
 import store from '../../modules/Store';
-import { IUser } from '../../types/global';
+import { IStore, IUser, Props } from '../../types/global';
 import tpl from './Found.tpl';
 
 class Found extends Block {
-  constructor(props: any) {
+  constructor(props: Props) {
     super({
       ...props,
     });
   }
 
   render() {
-    const props: Record<string, any> = (store.getState().foundUsers || []).map((found: IUser) => ({
+    const props: Props = (store.getState().foundUsers || []).map((found: IUser) => ({
       id: found.id,
       display_name: found.display_name ?? 'Без имени',
       first_name: found.first_name,
@@ -24,7 +24,7 @@ class Found extends Block {
   }
 }
 
-const mapStateToProps = (state: any) => (state.foundUsers || []).map((found: IUser) => ({
+const mapStateToProps = (state: IStore) => (state.foundUsers || []).map((found: IUser) => ({
   id: found.id,
   display_name: found.display_name ?? 'Без имени',
   first_name: found.first_name,

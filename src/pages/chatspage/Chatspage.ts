@@ -15,7 +15,11 @@ export class Chatspage extends Block {
   init() {
     super.init();
     checkUser();
-    chatsController.getList();
+    try {
+      chatsController.getList();
+    } catch(error) {
+      console.log('Ошибка : ', error);
+    }
   }
 
   protected childrenInit(): void {

@@ -6,25 +6,41 @@ import Pages from '../pages';
 
 export class AuthController {
   static async login(data: ISignIn) {
-    await AuthApi.login(data);
-    await this.fetchUser();
-    router.go(Pages.Chatspage.url);
+    try {
+      await AuthApi.login(data);
+      await this.fetchUser();
+      router.go(Pages.Chatspage.url);
+    } catch(error) {
+      console.error('Error in AuthController.login: ', error);
+    }
   }
 
   static async register(data: ISignUp) {
-    await AuthApi.register(data);
-    await this.fetchUser();
-    router.go(Pages.Chatspage.url);
+    try {
+      await AuthApi.register(data);
+      await this.fetchUser();
+      router.go(Pages.Chatspage.url);
+    } catch(error) {
+      console.error('Error in AuthController.register: ', error);
+    }
   }
 
   static async logout() {
-    await AuthApi.logout();
-    store.set('user', undefined);
-    router.go(Pages.Auth.url);
+    try {
+      await AuthApi.logout();
+      store.set('user', undefined);
+      router.go(Pages.Auth.url);
+    } catch(error) {
+      console.error('Error in AuthController.logout: ', error);
+    }
   }
 
   static async fetchUser() {
-    const user = await AuthApi.read();
-    store.set('user', user);
+    try {
+      const user = await AuthApi.read();
+      store.set('user', user);
+    } catch(error) {
+      console.error('Error in AuthController.fetchUser: ', error);
+    }
   }
 }

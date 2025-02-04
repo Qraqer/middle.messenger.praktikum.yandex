@@ -1,26 +1,29 @@
+import chatsController from '../../controllers/ChatsController';
 import chatUsersController from '../../controllers/ChatUsersController';
 import MessageController from '../../controllers/MessageController';
 import UserController from '../../controllers/UserController';
 import { withStore } from '../../hoc/withStore';
 import Block from '../../modules/Block';
 import store from '../../modules/Store';
-import { StringIndexed } from '../../types/global';
+import { IChatInfo, Props, StringIndexed } from '../../types/global';
 import { focusOutById, validation } from '../../utils/validation';
+import { ChatAvatar } from '../Avatar/Avatar';
 import { Button } from '../Button/Button';
 import ChatMessage from '../ChatMessage/ChatMessage';
 import Found from '../Found/Found';
 import { Input } from '../Input/Input';
 import { Modal } from '../Modal/Modal';
+import { TextBlock } from '../TextBlock/TextBlock';
 import tpl from './ChatBody.tpl';
 
 export class ChatBodyBase extends Block {
-  constructor(props: any) {
+  constructor(props: Props) {
     super({
       ...props,
       events: {
-        click: (event: any) => {
-          if (((event as Event).target as HTMLElement).closest('.js-show-menu')) {
-            ((event as Event).target as HTMLElement).closest('.js-menu-parent')?.classList.toggle('active');
+        click: (event: Event) => {
+          if ((event.target as HTMLElement).closest('.js-show-menu')) {
+            (event.target as HTMLElement).closest('.js-menu-parent')?.classList.toggle('active');
           }
         },
       },
@@ -58,6 +61,22 @@ export class ChatBodyBase extends Block {
           },
         },
       }),
+      deleteChat: new Button({
+        inner: 'Удалить чат',
+        class: 'chat-body__menu-link delete',
+        id: 'delete_chat',
+        link: '',
+        type: 'button',
+        events: {
+          click: async (event) => {
+            event?.preventDefault();
+            if (this.props.currentChat) {
+              this.showModal('delChatModal');
+            }
+          },
+        },
+      }),
+      avatar: new ChatAvatar({}),
       chatMessages: new ChatMessage({}),
       sendMessage: new Button({
         inner: '<span class="ico-arrow"></span>',
@@ -84,8 +103,8 @@ export class ChatBodyBase extends Block {
             placeholder: '',
             rule: 'notempty',
             events: {
-              input: async (event: any) => {
-                const login = ((event as Event).target as HTMLInputElement).value;
+              input: async (event: Event) => {
+                const login = (event.target as HTMLInputElement).value;
                 if (login !== '') {
                   await UserController.searchUser(login);
                 } else {
@@ -97,7 +116,7 @@ export class ChatBodyBase extends Block {
           }),
           new Found({
             events: {
-              click: (event: any) => this.choosedUser(event),
+              click: (event: Event) => this.choosedUser(event),
             },
           }),
         ],
@@ -142,7 +161,7 @@ export class ChatBodyBase extends Block {
             placeholder: '',
             rule: 'notempty',
             events: {
-              input: async (event: any) => {
+              input: async (event: Event) => {
                 const login = ((event as Event).target as HTMLInputElement).value;
                 if (login !== '') {
                   const chatUsers = await chatUsersController.getChatUsers(this.props.currentChat);
@@ -156,7 +175,7 @@ export class ChatBodyBase extends Block {
           }),
           new Found({
             events: {
-              click: (event: any) => this.choosedUser(event),
+              click: (event: Event) => this.choosedUser(event),
             },
           }),
         ],
@@ -189,6 +208,39 @@ export class ChatBodyBase extends Block {
           },
         }),
       }),
+      delChatModal: new Modal({
+        id: 'delChatModal',
+        title: 'Удалить чат',
+        content: new TextBlock({ inner: 'Вы действительно хотите удалить данный чат?'}),
+        cancel: new Button({
+          id: 'cancel',
+          class: 'btn btn__cancel',
+          inner: 'Отменить',
+          events: {
+            click: (event) => {
+              event?.preventDefault();
+              this.closeModal('delChatModal');
+            },
+          },
+        }),
+        submit: new Button({
+          id: 'submit',
+          class: 'btn btn__submit',
+          inner: 'Удалить',
+          events: {
+            click: async (event) => {
+              event?.preventDefault();
+              chatsController.deleteChat(this.props.currentChat)
+                .then(() => {
+                  store.set('currentChat', null);
+                  chatsController.getList();
+                })
+                .catch(e => console.log('Ошибка удаления чата: ', e.reason));
+              this.closeModal('delChatModal');
+            },
+          },
+        }),
+      }),
     };
   }
 
@@ -216,7 +268,6 @@ export class ChatBodyBase extends Block {
     document.getElementById('newmessage')?.querySelectorAll('input')?.forEach((input) => {
       if (!input.dataset.rule || input.dataset.rule === '' || typeof validation[input.dataset.rule] === 'undefined') {
         data[input.name] = input.value;
-
         return;
       }
       if (!focusOutById(input.id)) {
@@ -248,7 +299,7 @@ export class ChatBodyBase extends Block {
 const withChatBody = withStore((state) => ({
   messages: { ...(state.messages || {}) },
   currentChat: state.currentChat || undefined,
-  chat: state.chats.find((chat: any) => chat.id === state.currentChat),
+  chat: state.chats.find((chat: IChatInfo) => chat.id === state.currentChat),
   userId: state.user?.id,
   foundUsers: state.foundUsers ?? [],
 }));

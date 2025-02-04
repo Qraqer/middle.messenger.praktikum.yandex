@@ -11,30 +11,53 @@ class ChatsController {
   }
 
   async createChat(title: string) {
-    const chatId = await this.api.create(title);
-    store.set('currentChat', chatId);
+    try {
+      await this.api.create(title);
+    } catch (error) {
+      console.error('Error in ChatsController.createChat: ', error);
+    }
   }
 
   async deleteChat(chatId: ID) {
-    await this.api.delete(chatId);
+    try {
+      await this.api.delete(chatId);
+    } catch (error) {
+      console.error('Error in ChatsController.deleteChat: ', error);
+    }
   }
 
   async getList() {
-    const chats = await this.api.read();
-    chats.map(async (chat) => {
-      const token = await this.getToken(chat.id);
-      if (token) {
-        await MessageController.connect(chat.id as number, token);
-      }
-    });
-    chats.map((chat) => {
-      if (chat?.last_message?.time) {
-        chat.last_message.time = (new Date()).getDay() !== (new Date(chat.last_message.time)).getDay()
-          ? (new Date(chat.last_message.time)).toLocaleDateString()
-          : (new Date(chat.last_message.time)).toLocaleTimeString();
-      }
-    });
-    store.set('chats', chats);
+    try {
+      const chats = await this.api.read();
+      chats.map(async (chat) => {
+        const token = await this.getToken(chat.id);
+        if (token) {
+          await MessageController.connect(chat.id as number, token);
+        }
+      });
+      chats.map((chat) => {
+        if (chat?.last_message?.time) {
+          chat.last_message.time = (new Date()).getDay() !== (new Date(chat.last_message.time)).getDay()
+            ? (new Date(chat.last_message.time)).toLocaleDateString()
+            : (new Date(chat.last_message.time)).toLocaleTimeString();
+        }
+      });
+      store.set('chats', chats);
+    } catch (error) {
+      console.error('Error in ChatsController.getList: ', error);
+    }
+  }
+
+  async updateAvatar(data: FormData) {
+    try {
+      const chatData = await this.api.updateAvatar(data);
+      store.set('chats', store.getState().chats.map(chat => {
+        if (chat.id === chatData.id) return chatData;
+        return chat;
+      }));
+    } catch (error) {
+      console.error('Error in ChatsController.updateAvatar: ', error);
+    }
   }
 
   setChat(chatId: ID) {
@@ -42,9 +65,13 @@ class ChatsController {
   }
 
   async getToken(chatId: ID) {
-    const { token } = await this.api.readChatToken(chatId);
-
-    return token;
+    try {
+      const { token } = await this.api.readChatToken(chatId);
+      return token;
+    } catch (error) {
+      console.error('Error in ChatsController.getToken: ', error);
+      return false;
+    }
   }
 }
 

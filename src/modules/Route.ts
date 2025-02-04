@@ -1,6 +1,6 @@
 import render from '../utils/render';
 import Block from './Block';
-import { StringIndexed } from '../types/global';
+import { Props, StringIndexed } from '../types/global';
 
 export default class Route {
   private _pathname: string;
@@ -8,7 +8,7 @@ export default class Route {
   private _block: Block<any> | null;
   private _props: StringIndexed;
 
-  constructor(pathname: string, view: typeof Block, props: any) {
+  constructor(pathname: string, view: typeof Block, props: Props) {
     this._pathname = pathname;
     this._blockClass = view;
     this._block = null;

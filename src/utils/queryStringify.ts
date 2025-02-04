@@ -1,4 +1,6 @@
-export default function queryStringify(data: Record<string, any>): string {
+import { StringIndexed } from "../types/global";
+
+export default function queryStringify(data: StringIndexed): string {
   if (typeof data !== 'object') {
     throw new Error('Data must be object');
   }

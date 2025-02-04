@@ -1,8 +1,8 @@
 import Handlebars from 'handlebars';
 import EventBus from './EventBus';
-import { Props } from '../types/global';
+import { Props, StringIndexed } from '../types/global';
 
-export default class Block<P extends Record<string, any> = any> {
+export default class Block<P extends StringIndexed = any> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -155,7 +155,7 @@ export default class Block<P extends Record<string, any> = any> {
     return document.createElement(tagName);
   }
 
-  compile(templateString: string, context: Record<string, any>) {
+  compile(templateString: string, context: StringIndexed) {
     const contextAndStubs = { ...context };
 
     Object.entries(this.children).forEach(([name, child]) => {

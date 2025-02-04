@@ -1,6 +1,6 @@
 import Block from '../../modules/Block';
 import tpl from './ChangePassword.tpl';
-import { IPassword, Props } from '../../types/global';
+import { IPassword, Props, StringIndexed } from '../../types/global';
 import { focusOutById, showErrorById } from '../../utils/validation';
 import { Link } from '../../components/Link/Link';
 import { Button } from '../../components/Button/Button';
@@ -70,7 +70,7 @@ export class ChangePassword extends Block {
   submitProfile(event: Event) {
     event.preventDefault();
     let submitSuccess = true;
-    const formResult: Record<string, any> = {};
+    const formResult: StringIndexed = {};
     const inputs = document.getElementById('form-profile')?.querySelectorAll('input');
     inputs?.forEach((input, i) => {
       const name = input.getAttribute('name') ?? `name_${i}`;

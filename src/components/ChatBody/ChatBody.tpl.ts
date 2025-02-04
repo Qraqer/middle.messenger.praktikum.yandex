@@ -3,9 +3,7 @@ export default `<div class="chat-box">
   <div class="chat-body__titlebox">
     <div class="chat-body__namebox">
       <div class="chat-body__avatar">
-      {{#if chat.avatar}}
-        <img src="{{chat.avatar}}">
-      {{/if}}
+      {{{ avatar }}}
       </div>
       <div class="chat-body__name">{{chat.title}}</div>
     </div>
@@ -23,6 +21,7 @@ export default `<div class="chat-box">
         <div class="chat-body__menu-inner">
         {{{ addUser }}}
         {{{ deleteUser }}}
+        {{{ deleteChat }}}
         </div>
       </div>
     </div>
@@ -79,4 +78,5 @@ export default `<div class="chat-box">
 {{/if}}
 {{{ addUserModal }}}
 {{{ delUserModal }}}
+{{{ delChatModal }}}
 </div>`;

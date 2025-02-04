@@ -368,10 +368,16 @@ button {
         padding: 0;
         color: $c-gray;
         text-align: right;
+        background: #eee;
+        color: #333;
 
         &:focus-visible {
           outline: none;
         }
+      }
+
+      .input__box {
+        padding: 0;
       }
     }
 
@@ -382,6 +388,12 @@ button {
         position: relative;
         flex: 0 0 100%;
       }
+    }
+    
+    .input__error {
+      line-height: 1.2em;
+      position: relative;
+      max-width: 300px;
     }
   }
 

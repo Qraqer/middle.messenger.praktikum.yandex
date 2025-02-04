@@ -10,24 +10,40 @@ class UserController {
   }
 
   async updateProfile(data: TUser) {
-    await this.api.updateProfile(data);
+    try {
+      await this.api.updateProfile(data);
+    } catch (error) {
+      console.error('Error in UserController.: ', error);
+    }
   }
 
   async updateAvatar(data: FormData) {
-    const userData = await this.api.updateAvatar(data);
-    console.log('userData', userData);
-    store.set('currentUser', userData);
+    try {
+      const userData = await this.api.updateAvatar(data);
+      store.set('currentUser', userData);
+    } catch (error) {
+      console.error('Error in UserController.: ', error);
+    }
   }
 
   async updatePassword(data: IPassword) {
-    await this.api.updatePassword(data);
+    try {
+      await this.api.updatePassword(data);
+    } catch (error) {
+      console.error('Error in UserController.: ', error);
+    }
   }
 
   async searchUser(login: string) {
-    const users = await this.api.searchUser(login);
-    store.set('foundUsers', users);
+    try {
+      const users = await this.api.searchUser(login);
+      store.set('foundUsers', users);
 
-    return users;
+      return users;
+    } catch (error) {
+      console.error('Error in UserController.: ', error);
+      return false;
+    }
   }
 }
 

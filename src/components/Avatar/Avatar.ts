@@ -1,13 +1,16 @@
+import { AuthController } from '../../controllers/AuthController';
+import chatsController from '../../controllers/ChatsController';
 import UserController from '../../controllers/UserController';
 import { withStore } from '../../hoc/withStore';
 import Block from '../../modules/Block';
+import { IChatInfo, IStore, Props } from '../../types/global';
 import { Button } from '../Button/Button';
 import { FileInput } from '../FileInput/FileInput';
 import { Modal } from '../Modal/Modal';
 import tpl from './Avatar.tpl';
 
 class AvatarBase extends Block {
-  constructor(props: any) {
+  constructor(props: Props) {
     super({
       ...props,
     });
@@ -52,7 +55,22 @@ class AvatarBase extends Block {
               const fileInput = document.getElementById('avatar') as HTMLInputElement;
               if (fileInput?.files?.length) {
                 data.append('avatar', fileInput.files[0]);
-                await UserController.updateAvatar(data);
+                if (!this.props.currentChat) {
+                  await UserController.updateAvatar(data)
+                    .then(() => {
+                      AuthController.fetchUser();
+                      fileInput.value = '';
+                    })
+                    .catch(e => console.log('Ошибка добавления аватара к пользователю: ', e.reason));
+                } else {
+                  data.append('chatId', this.props.currentChat);
+                  await chatsController.updateAvatar(data)
+                    .then(() => {
+                      chatsController.getList();
+                      fileInput.value = '';
+                    })
+                    .catch(e => console.log('Ошибка добавления аватара к чату: ', e, e.reason));
+                }
               }
               this.closeModal('avatarModal');
             },
@@ -75,8 +93,17 @@ class AvatarBase extends Block {
   }
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: IStore) => ({
   avatar: state.user?.avatar ?? '',
 });
 
 export const Avatar = withStore(mapStateToProps)(AvatarBase);
+
+export const UserAvatar = withStore((state: IStore) => ({
+  avatar: state.user?.avatar ?? ''
+}))(AvatarBase);
+
+export const ChatAvatar = withStore((state: IStore) => ({
+  avatar: state.chats?.find((chat: IChatInfo) => chat.id === state.currentChat)?.avatar ?? '',
+  currentChat: state.currentChat
+}))(AvatarBase);

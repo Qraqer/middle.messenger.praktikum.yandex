@@ -28,7 +28,7 @@ class MessageController {
 
   private subscribe(wst: WSTransport, chatId: number) {
     // @ts-expect-error: ts expects the type of message
-    wst.on(WSTEvents.MESSAGE, (message: any) => this.onMessage(chatId, message));
+    wst.on(WSTEvents.MESSAGE, (message: unknown) => this.onMessage(chatId, message));
     wst.on(WSTEvents.CLOSE, () => this.onClose(chatId));
   }
 

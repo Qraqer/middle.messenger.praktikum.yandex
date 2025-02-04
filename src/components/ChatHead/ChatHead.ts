@@ -72,7 +72,9 @@ export class ChatHead extends Block {
     event.preventDefault();
     if (focusOutById('new_chat')) {
       const title = (document.getElementById('new_chat') as HTMLInputElement)?.value;
-      chatsController.createChat(title);
+      chatsController.createChat(title)
+        .then(() => chatsController.getList())
+        .catch(error => console.log('Ошибка создания чата: ', error.reason));
       this.closeModal(event);
     }
   }

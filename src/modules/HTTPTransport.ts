@@ -1,3 +1,4 @@
+import { StringIndexed } from '../types/global';
 import queryStringify from '../utils/queryStringify';
 
 export enum METHODS {
@@ -7,12 +8,14 @@ export enum METHODS {
   DELETE = 'DELETE',
 }
 
-type TD = Document | XMLHttpRequestBodyInit | Record<string, any>;
+type TD = Document | XMLHttpRequestBodyInit | StringIndexed;
+
+type HTTPMethod = <R=unknown>(url: string, options?: TD) => Promise<R>;
 
 interface IOptions {
   method: METHODS;
   data?: TD,
-  headers?: Record<string, any>
+  headers?: StringIndexed
 }
 
 export default class HTTPTransport {
@@ -24,20 +27,20 @@ export default class HTTPTransport {
     this.url = `${this.API}${url}`;
   }
 
-  public get<Response>(url = '', data?: TD): Promise<Response> {
-    return this.request<Response>(this.url + url, { method: METHODS.GET, data });
+  public get: HTTPMethod = (url = '', data = {}) => {
+    return this.request(this.url + url, { method: METHODS.GET, data });
   }
 
-  public put<Response = void>(url: string, data?: TD): Promise<Response> {
-    return this.request<Response>(this.url + url, { method: METHODS.PUT, data });
+  public put: HTTPMethod = (url, data = {}) => {
+    return this.request(this.url + url, { method: METHODS.PUT, data });
   }
 
-  public post<Response = void>(url: string, data?: TD): Promise<Response> {
-    return this.request<Response>(this.url + url, { method: METHODS.POST, data });
+  public post: HTTPMethod = (url, data = {}) => {
+    return this.request(this.url + url, { method: METHODS.POST, data });
   }
 
-  public delete<Response = void>(url: string, data?: TD): Promise<Response> {
-    return this.request<Response>(this.url + url, { method: METHODS.DELETE, data });
+  public delete: HTTPMethod = (url, data = {}) => {
+    return this.request(this.url + url, { method: METHODS.DELETE, data });
   }
 
   private request<Response>(url: string, options: IOptions): Promise<Response> {
@@ -51,7 +54,7 @@ export default class HTTPTransport {
       }
 
       if (method === METHODS.GET && data) {
-        url += queryStringify(data as Record<string, any>);
+        url += queryStringify(data as StringIndexed);
       }
 
       const xhr = new XMLHttpRequest();

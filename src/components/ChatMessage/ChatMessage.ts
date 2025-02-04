@@ -1,6 +1,6 @@
 import { withStore } from '../../hoc/withStore';
 import Block from '../../modules/Block';
-import { IMessageProps } from '../../types/global';
+import { IMessage, IMessageProps, IStore } from '../../types/global';
 import tpl from './ChatMessage.tpl';
 
 class ChatMessages extends Block {
@@ -15,11 +15,11 @@ class ChatMessages extends Block {
   }
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: IStore) => {
   const messages = state.currentChat ? (state.messages || {})[state.currentChat] : [];
 
   return {
-    messages: messages?.map((message: any) => ({
+    messages: messages?.map((message: IMessage) => ({
       isAuthor: message.user_id === state.user?.id,
       datetime: (new Date(message.time)).toLocaleString(),
       content: message.content,

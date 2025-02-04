@@ -2,8 +2,8 @@ export default `{{#if (checkIfEqual id '')}}<div class="chat-card__empty">Чат
 {{else}}
 <div class="chat-card js-open-chat{{#if selected}} is--active{{/if}}" data-id="{{id}}">
   <div class="chat-card__avatar">
-  {{#if (checkIfNotEqual avatar '')}}
-  <img src="{{avatar}}">
+  {{#if avatar}}
+  <img src="https://ya-praktikum.tech/api/v2/resources{{avatar}}">
   {{/if}}
   </div>
   <div class="chat-card__textbox">
