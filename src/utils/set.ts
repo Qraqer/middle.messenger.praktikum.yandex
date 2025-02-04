@@ -1,6 +1,6 @@
-import { isPlainObject } from "./isPlainObject";
-import { Indexed, PlainObject } from "../types/global";
-import merge from "./merge";
+import { isPlainObject } from './isPlainObject';
+import { Indexed, PlainObject } from '../types/global';
+import merge from './merge';
 
 export default function set(object: Indexed | unknown, path: string, value: unknown): Indexed | unknown {
   if (!isPlainObject(object)) {

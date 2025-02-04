@@ -1,10 +1,12 @@
-import Block from "../../modules/Block";
-import { StringIndexed } from "../../types/global";
+import Block from '../../modules/Block';
+import { StringIndexed } from '../../types/global';
 import tpl from './TextBlock.tpl';
 
 export class TextBlock extends Block {
   constructor(props: StringIndexed) {
-    super(props);
+    super({
+      ...props,
+    });
   }
 
   render() {

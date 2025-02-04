@@ -1,10 +1,10 @@
-import chatsController from "../../controllers/ChatsController";
-import { withStore } from "../../hoc/withStore";
-import Block from "../../modules/Block";
-import Store from "../../modules/Store";
+import chatsController from '../../controllers/ChatsController';
+import { withStore } from '../../hoc/withStore';
+import Block from '../../modules/Block';
+import store from '../../modules/Store';
 import { IChatCard, StringIndexed } from '../../types/global';
-import isEqual from "../../utils/isEqual";
-import { ChatCard } from "../ChatCard/ChatCard";
+import isEqual from '../../utils/isEqual';
+import { ChatCard } from '../ChatCard/ChatCard';
 import tpl from './ChatList.tpl';
 
 interface IChatList extends StringIndexed {
@@ -17,7 +17,7 @@ export class ChatListBase extends Block<IChatList> {
   }
 
   protected childrenInit(): void {
-    const state = Store.getState();
+    const state = store.getState();
     this.children.chats = this.getChats(state);
   }
 
@@ -27,16 +27,18 @@ export class ChatListBase extends Block<IChatList> {
 
       return true;
     }
+
     return false;
   }
 
   private getChats(props: IChatList) {
-    const chats = props.chats.map(data => new ChatCard({
+    const chats = props.chats.map((data) => new ChatCard({
       ...data,
       events: {
-        click: () => chatsController.setChat(data.id)
-      }
+        click: () => chatsController.setChat(data.id),
+      },
     }));
+
     return chats;
   }
 
@@ -45,6 +47,6 @@ export class ChatListBase extends Block<IChatList> {
   }
 }
 
-const withChats = withStore(state => ({ chats: [ ...(state.chats || [])] }));
+const withChats = withStore((state) => ({ chats: [...(state.chats || [])] }));
 
 export const ChatList = withChats(ChatListBase);

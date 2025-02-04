@@ -47,8 +47,8 @@ export interface IUser {
   avatar: string;
 }
 
-export type TUser = Omit<IUser, 'id|password|avatar'>
-export type TChatUser = Omit<IUser, 'password|email|phone'>
+export type TUser = Omit<IUser, 'id|password|avatar'>;
+export type TChatUser = Omit<IUser, 'password|email|phone'>;
 
 export interface IPassword {
   oldPassword: string;
@@ -110,4 +110,3 @@ export interface IMessageProps {
   isAuthor: boolean;
   datetime: string | Date;
 }
-

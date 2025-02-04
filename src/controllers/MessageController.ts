@@ -1,6 +1,6 @@
-import store from "../modules/Store";
-import WSTransport, { WSTEvents } from "../modules/WSTransport";
-import { IMessage } from "../types/global";
+import store from '../modules/Store';
+import WSTransport, { WSTEvents } from '../modules/WSTransport';
+import { IMessage } from '../types/global';
 
 class MessageController {
   private sockets: Map<Number, WSTransport> = new Map();
@@ -39,7 +39,7 @@ class MessageController {
       throw new Error(`Chat ${chatId} not connected`);
     }
 
-    socket.send({ type:'get old', content: null });
+    socket.send({ type: 'get old', content: null });
   }
 
   private onClose(chatId: number) {
@@ -63,7 +63,7 @@ class MessageController {
   }
 
   public closeAllChats() {
-    Array.from(this.sockets.values()).forEach(socket => socket.close());
+    Array.from(this.sockets.values()).forEach((socket) => socket.close());
   }
 
   public postMessage(chatId: number, message: string) {

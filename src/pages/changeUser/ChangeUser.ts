@@ -15,7 +15,7 @@ import UserController from '../../controllers/UserController';
 class ChangeUserBase extends Block {
   constructor(props: Props) {
     super({
-      ...props
+      ...props,
     });
   }
 
@@ -33,7 +33,7 @@ class ChangeUserBase extends Block {
     });
     this.children.avatar = new Avatar({});
     this.children.editrows = Object.keys(profileLabels)
-      .filter(key => (['password', 'oldpassword', 'newpassword']).indexOf(key) === -1)
+      .filter((key) => (['password', 'oldpassword', 'newpassword']).indexOf(key) === -1)
       .map((key: any) => new EditRow({
         labeltext: profileLabels[key],
         label: '',
@@ -42,18 +42,17 @@ class ChangeUserBase extends Block {
         type: 'text',
         value: this.props[key] ?? '',
         rule: profileRules[key] ?? '',
-      })
-    );
+      }));
     this.children.button = new Button({
-        id: 'profile-submit',
-        inner: 'Сохранить',
-        link: Pages.Profile.url,
-        class: 'btn',
-        events: {
-          click: (event) => this.submitProfile(event as Event)
-        }
-      });
-    
+      id: 'profile-submit',
+      inner: 'Сохранить',
+      link: Pages.Profile.url,
+      class: 'btn',
+      events: {
+        click: (event) => this.submitProfile(event as Event),
+      },
+    });
+
     /* this.children = {
       backlink: new Link({
         class: 'btn__circle',
@@ -90,17 +89,19 @@ class ChangeUserBase extends Block {
     const formResult: Record<string, any> = {};
     const inputs = document.getElementById('form-profile')?.querySelectorAll('input');
     inputs?.forEach((input, i) => {
-      const name = input.getAttribute('name') ?? 'name_' + i;
+      const name = input.getAttribute('name') ?? `name_${i}`;
       if (!input.dataset?.rule || input.dataset?.rule === '' || typeof validation[input.dataset?.rule] === 'undefined') {
-        formResult[ name ] = input.value;
+        formResult[name] = input.value;
+
         return;
       }
       if (!focusOutById(input.getAttribute('id') as string)) {
         submitSuccess = false;
+
         return;
       }
-      formResult[ name ] = input.value;
-    })
+      formResult[name] = input.value;
+    });
     if (submitSuccess) {
       UserController.updateProfile(formResult as TUser);
       const button = document.getElementById('profile-submit');
@@ -120,7 +121,7 @@ class ChangeUserBase extends Block {
   }
 }
 
-const withProfileEdit = withStore(state => ({
+const withProfileEdit = withStore((state) => ({
   login: state.user?.login,
   first_name: state.user?.first_name,
   second_name: state.user?.second_name,

@@ -1,7 +1,7 @@
-import { ChatsApi } from "../api/ChatsApi";
-import Store from "../modules/Store";
-import { ID } from "../types/global";
-import MessageController from "./MessageController";
+import { ChatsApi } from '../api/ChatsApi';
+import store from '../modules/Store';
+import { ID } from '../types/global';
+import MessageController from './MessageController';
 
 class ChatsController {
   private readonly api: ChatsApi;
@@ -12,7 +12,7 @@ class ChatsController {
 
   async createChat(title: string) {
     const chatId = await this.api.create(title);
-    Store.set('currentChat', chatId);
+    store.set('currentChat', chatId);
   }
 
   async deleteChat(chatId: ID) {
@@ -26,23 +26,24 @@ class ChatsController {
       if (token) {
         await MessageController.connect(chat.id as number, token);
       }
-    })
-    chats.map(chat => {
+    });
+    chats.map((chat) => {
       if (chat?.last_message?.time) {
         chat.last_message.time = (new Date()).getDay() !== (new Date(chat.last_message.time)).getDay()
           ? (new Date(chat.last_message.time)).toLocaleDateString()
           : (new Date(chat.last_message.time)).toLocaleTimeString();
       }
-    })
-    Store.set('chats', chats);
+    });
+    store.set('chats', chats);
   }
 
   setChat(chatId: ID) {
-    Store.set('currentChat', chatId);
+    store.set('currentChat', chatId);
   }
 
   async getToken(chatId: ID) {
     const { token } = await this.api.readChatToken(chatId);
+
     return token;
   }
 }

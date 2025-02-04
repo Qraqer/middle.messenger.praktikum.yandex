@@ -11,7 +11,7 @@ import checkUser from '../../utils/checkUser';
 class ProfileBase extends Block {
   constructor(props: Props) {
     super({
-      ...props
+      ...props,
     });
   }
 
@@ -36,18 +36,20 @@ class ProfileBase extends Block {
   }
 
   render() {
-    let profile: Record<string, any> = {};
+    const profile: Record<string, any> = {};
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     Object.entries(this.props).forEach(([key, value], _) => {
       if (key === 'avatar') return;
       profile[key as string] = {
-        label: profileLabels[key], value: value
-      }
+        label: profileLabels[key], value,
+      };
     });
-    return this.compile(tpl, {profile, display_name: this.props.display_name});
+
+    return this.compile(tpl, { profile, display_name: this.props.display_name });
   }
 }
 
-const withProfile = withStore(state => ({
+const withProfile = withStore((state) => ({
   login: state.user?.login,
   first_name: state.user?.first_name,
   second_name: state.user?.second_name,

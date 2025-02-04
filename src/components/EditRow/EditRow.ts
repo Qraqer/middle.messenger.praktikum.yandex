@@ -1,12 +1,12 @@
-import Block from "../../modules/Block";
-import { Props } from "../../types/global";
-import { Input } from "../Input/Input";
+import Block from '../../modules/Block';
+import { Props } from '../../types/global';
+import { Input } from '../Input/Input';
 import tpl from './EditRow.tpl';
 
 export class EditRow extends Block {
   constructor(props: Props) {
     super({
-      ...props
+      ...props,
     });
   }
 
@@ -17,7 +17,7 @@ export class EditRow extends Block {
       name: this.props.name,
       type: this.props.type,
       value: this.props.value ?? '',
-      rule: this.props.rule ?? ''
+      rule: this.props.rule ?? '',
     });
   }
 

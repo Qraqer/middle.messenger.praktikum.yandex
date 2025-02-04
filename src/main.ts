@@ -10,7 +10,7 @@ const router = new Router();
 
 router.setRoot('#app');
 
-Object.values(Pages).forEach(route => router.use(route.url, route.page));
+Object.values(Pages).forEach((route) => router.use(route.url, route.page));
 
 document.addEventListener('DOMContentLoaded', () => {
   router.start();

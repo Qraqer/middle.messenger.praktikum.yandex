@@ -16,8 +16,8 @@ export class Link extends Block {
         click: (event: Event) => {
           event.preventDefault();
           this.go();
-        }
-      }
+        },
+      },
     });
   }
 

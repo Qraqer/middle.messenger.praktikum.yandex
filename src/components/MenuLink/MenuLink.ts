@@ -1,4 +1,4 @@
-import Block from "../../modules/Block";
+import Block from '../../modules/Block';
 import tpl from './MenuLink.tpl';
 
 export class MenuLink extends Block {

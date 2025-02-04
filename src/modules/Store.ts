@@ -1,9 +1,11 @@
-import EventBus from "./EventBus";
-import set from "../utils/set";
-import { IChatInfo, IMessage, IUser, TChatUser } from "../types/global";
+import EventBus from './EventBus';
+import set from '../utils/set';
+import {
+  IChatInfo, IMessage, IUser, TChatUser,
+} from '../types/global';
 
 export enum StoreEvents {
-  UPDATED = 'updated'
+  UPDATED = 'updated',
 }
 
 export interface IStore {
@@ -21,7 +23,7 @@ export class Store extends EventBus {
     currentChat: undefined,
     messages: {},
     users: [],
-    foundUsers: []
+    foundUsers: [],
   };
 
   public getState() {
@@ -32,7 +34,7 @@ export class Store extends EventBus {
     set(this.state, path, value);
 
     this.emit(StoreEvents.UPDATED, this.getState());
-  };
+  }
 }
 
 const store = new Store();

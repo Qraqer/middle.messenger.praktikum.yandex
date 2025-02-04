@@ -1,14 +1,14 @@
-import { AuthController } from "../../controllers/AuthController";
-import chatsController from "../../controllers/ChatsController";
-import Block from "../../modules/Block";
-import { router } from "../../modules/Router";
-import Pages from "../../pages";
-import { focusOutById } from "../../utils/validation";
-import { Button } from "../Button/Button";
-import { Input } from "../Input/Input";
-import { Link } from "../Link/Link";
-import { Modal } from "../Modal/Modal";
-import { Search } from "../Search/Search";
+import { AuthController } from '../../controllers/AuthController';
+import chatsController from '../../controllers/ChatsController';
+import Block from '../../modules/Block';
+import { router } from '../../modules/Router';
+import Pages from '../../pages';
+import { focusOutById } from '../../utils/validation';
+import { Button } from '../Button/Button';
+import { Input } from '../Input/Input';
+import { Link } from '../Link/Link';
+import { Modal } from '../Modal/Modal';
+import { Search } from '../Search/Search';
 import tpl from './ChatHead.tpl';
 
 export class ChatHead extends Block {
@@ -46,7 +46,7 @@ export class ChatHead extends Block {
           name: 'title',
           type: 'text',
           placeholder: '',
-          rule: 'notempty'
+          rule: 'notempty',
         }),
         cancel: new Button({
           id: 'cancel',
@@ -64,10 +64,10 @@ export class ChatHead extends Block {
             click: (event) => this.createChat(event as Event),
           },
         }),
-      })
+      }),
     };
   }
-  
+
   createChat(event: Event) {
     event.preventDefault();
     if (focusOutById('new_chat')) {
@@ -87,7 +87,7 @@ export class ChatHead extends Block {
     event.preventDefault();
     (this.children.modal as Modal).hide();
   }
-  
+
   render() {
     return this.compile(tpl, {});
   }

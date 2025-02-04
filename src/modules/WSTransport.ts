@@ -1,4 +1,4 @@
-import EventBus from "./EventBus";
+import EventBus from './EventBus';
 
 export const WSTEvents = {
   CONNECTED: 'connected',
@@ -32,7 +32,7 @@ export default class WSTransport extends EventBus {
 
     return new Promise((resolve) => {
       this.on(WSTEvents.CONNECTED, () => resolve());
-    })
+    });
   }
 
   public close() {
@@ -48,7 +48,7 @@ export default class WSTransport extends EventBus {
       clearInterval(this.pingInterval);
 
       this.pingInterval = 0;
-    })
+    });
   }
 
   private subscribe(socket: WebSocket) {
@@ -68,7 +68,7 @@ export default class WSTransport extends EventBus {
       if (data?.type === 'pong' || data?.type === 'user connected') {
         return;
       }
-      
+
       this.emit(WSTEvents.MESSAGE, data);
     });
   }

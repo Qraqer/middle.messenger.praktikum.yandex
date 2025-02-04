@@ -1,22 +1,25 @@
 import Route from './Route';
 
 export default class Router {
-  private static __instance: Router;
+  private static _instance: Router;
   private routes: Route[] = [];
   private history: any = window.history;
   private _currentRoute: Route | null = null;
   private _rootQuery: string = '#app';
 
   constructor() {
-    if (Router.__instance) {
-      return Router.__instance;
+    // eslint-disable-next-line no-underscore-dangle
+    if (Router._instance) {
+      // eslint-disable-next-line no-underscore-dangle
+      return Router._instance;
     }
 
     this.routes = [];
     this.history = window.history;
     this._currentRoute = null;
 
-    Router.__instance = this;
+    // eslint-disable-next-line no-underscore-dangle
+    Router._instance = this;
   }
 
   public setRoot(rootQuery: string) {
@@ -26,7 +29,7 @@ export default class Router {
   }
 
   public use(pathname: string, block: any) {
-    const route = new Route(pathname, block, {rootQuery: this._rootQuery});
+    const route = new Route(pathname, block, { rootQuery: this._rootQuery });
 
     this.routes.push(route);
 
@@ -36,7 +39,7 @@ export default class Router {
   public start() {
     window.onpopstate = ((event: PopStateEvent) => {
       this._onRoute((<Window>event.currentTarget).location.pathname);
-    }).bind(this);
+    });
 
     this.history.pushState('', '', window.location.pathname);
     this._onRoute(window.location.pathname);
@@ -70,7 +73,7 @@ export default class Router {
   }
 
   public getRoute(pathname: string) {
-    return this.routes.find(route => route.match(pathname));
+    return this.routes.find((route) => route.match(pathname));
   }
 }
 

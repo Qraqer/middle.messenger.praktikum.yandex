@@ -1,1 +1,1 @@
-export default `<div class="empty">{{{ innerText }}}</div>`
+export default '<div class="empty">{{{ innerText }}}</div>';

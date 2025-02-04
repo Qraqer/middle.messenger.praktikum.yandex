@@ -87,7 +87,7 @@ export class Register extends Block {
   submitAuth(event: Event) {
     event.preventDefault();
     let formSuccess = true;
-    let data: StringIndexed = {};
+    const data: StringIndexed = {};
     Object.values(this.children).forEach((child) => {
       if (child.id === 'password_check') {
         const passwordInput = document.getElementById('password') as HTMLInputElement;
@@ -113,14 +113,14 @@ export class Register extends Block {
           chatsController.getList();
           router.go(Pages.Chatspage.url);
         })
-        .catch(error => {
+        .catch((error) => {
           if (error.reason === 'User already in system') {
             router.go(Pages.Chatspage.url);
           } else {
             alert('Ошибка авторизации!');
             console.log(error);
           }
-        })
+        });
     }
   }
 

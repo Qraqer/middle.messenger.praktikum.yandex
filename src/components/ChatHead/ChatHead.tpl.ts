@@ -12,4 +12,4 @@ export default `<div class="chat__top">
     {{{ search }}}
   </div>
   {{{ modal }}}
-</div>`
+</div>`;

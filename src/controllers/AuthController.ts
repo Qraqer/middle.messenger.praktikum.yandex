@@ -1,8 +1,8 @@
-import AuthApi from "../api/AuthApi";
-import Store from "../modules/Store";
-import { ISignIn, ISignUp } from "../types/global";
-import { router } from "../modules/Router";
-import Pages from "../pages";
+import AuthApi from '../api/AuthApi';
+import store from '../modules/Store';
+import { ISignIn, ISignUp } from '../types/global';
+import { router } from '../modules/Router';
+import Pages from '../pages';
 
 export class AuthController {
   static async login(data: ISignIn) {
@@ -19,12 +19,12 @@ export class AuthController {
 
   static async logout() {
     await AuthApi.logout();
-    Store.set('user', undefined);
+    store.set('user', undefined);
     router.go(Pages.Auth.url);
   }
 
   static async fetchUser() {
     const user = await AuthApi.read();
-    Store.set('user', user);
+    store.set('user', user);
   }
 }

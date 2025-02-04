@@ -211,11 +211,11 @@ export default class Block<P extends Record<string, any> = any> {
   }
 
   show() {
-    this.getContent()!.style.display = "block";
+    this.getContent()!.style.display = 'block';
   }
 
   hide() {
-    this.getContent()!.style.display = "none";
+    this.getContent()!.style.display = 'none';
   }
 
   get element() {

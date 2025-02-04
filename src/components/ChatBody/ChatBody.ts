@@ -1,16 +1,16 @@
-import chatUsersController from "../../controllers/ChatUsersController";
-import MessageController from "../../controllers/MessageController";
-import UserController from "../../controllers/UserController";
-import { withStore } from "../../hoc/withStore";
-import Block from "../../modules/Block";
-import store from "../../modules/Store";
-import { StringIndexed } from "../../types/global";
-import { focusOutById, validation } from "../../utils/validation";
-import { Button } from "../Button/Button";
-import ChatMessage from "../ChatMessage/ChatMessage";
-import Found from "../Found/Found";
-import { Input } from "../Input/Input";
-import { Modal } from "../Modal/Modal";
+import chatUsersController from '../../controllers/ChatUsersController';
+import MessageController from '../../controllers/MessageController';
+import UserController from '../../controllers/UserController';
+import { withStore } from '../../hoc/withStore';
+import Block from '../../modules/Block';
+import store from '../../modules/Store';
+import { StringIndexed } from '../../types/global';
+import { focusOutById, validation } from '../../utils/validation';
+import { Button } from '../Button/Button';
+import ChatMessage from '../ChatMessage/ChatMessage';
+import Found from '../Found/Found';
+import { Input } from '../Input/Input';
+import { Modal } from '../Modal/Modal';
 import tpl from './ChatBody.tpl';
 
 export class ChatBodyBase extends Block {
@@ -22,8 +22,8 @@ export class ChatBodyBase extends Block {
           if (((event as Event).target as HTMLElement).closest('.js-show-menu')) {
             ((event as Event).target as HTMLElement).closest('.js-menu-parent')?.classList.toggle('active');
           }
-        }
-      }
+        },
+      },
     });
   }
 
@@ -39,8 +39,8 @@ export class ChatBodyBase extends Block {
           click: (event) => {
             event?.preventDefault();
             this.showModal('addUserModal');
-          }
-        }
+          },
+        },
       }),
       deleteUser: new Button({
         inner: 'Удалить пользователя',
@@ -49,14 +49,14 @@ export class ChatBodyBase extends Block {
         link: '',
         type: 'button',
         events: {
-          click: async (event, ) => {
+          click: async (event) => {
             event?.preventDefault();
             if (this.props.currentChat) {
               await chatUsersController.getChatUsers(this.props.currentChat);
               this.showModal('delUserModal');
             }
-          }
-        }
+          },
+        },
       }),
       chatMessages: new ChatMessage({}),
       sendMessage: new Button({
@@ -69,8 +69,8 @@ export class ChatBodyBase extends Block {
           click: (event) => {
             event?.preventDefault();
             this.sendMessage(event as Event);
-          }
-        }
+          },
+        },
       }),
       addUserModal: new Modal({
         id: 'addUserModal',
@@ -92,14 +92,14 @@ export class ChatBodyBase extends Block {
                   this.emptyFound();
                 }
                 document.getElementById('add-user')?.focus();
-              }
-            }
+              },
+            },
           }),
           new Found({
             events: {
-              click: (event: any) => this.choosedUser(event)
-            }
-          })
+              click: (event: any) => this.choosedUser(event),
+            },
+          }),
         ],
         cancel: new Button({
           id: 'cancel',
@@ -123,7 +123,7 @@ export class ChatBodyBase extends Block {
               const userId = input?.dataset?.id;
               if (userId) {
                 input.value = '';
-                await chatUsersController.addUsers(this.props.currentChat, [parseInt(userId)]);
+                await chatUsersController.addUsers(this.props.currentChat, [parseInt(userId, 10)]);
               }
               this.closeModal('addUserModal');
             },
@@ -151,14 +151,14 @@ export class ChatBodyBase extends Block {
                   this.emptyFound();
                 }
                 document.getElementById('del-user')?.focus();
-              }    
-            }
+              },
+            },
           }),
           new Found({
             events: {
-              click: (event: any) => this.choosedUser(event)
-            }
-          })
+              click: (event: any) => this.choosedUser(event),
+            },
+          }),
         ],
         cancel: new Button({
           id: 'cancel',
@@ -180,8 +180,8 @@ export class ChatBodyBase extends Block {
               event?.preventDefault();
               const input = (document.getElementById('del-user') as HTMLInputElement);
               const userId = input?.dataset?.id;
-              if (userId && parseInt(userId)) {
-                await chatUsersController.deleteUsers(this.props.currentChat, [parseInt(userId)]);
+              if (userId && parseInt(userId, 10)) {
+                await chatUsersController.deleteUsers(this.props.currentChat, [parseInt(userId, 10)]);
                 input.value = '';
               }
               this.closeModal('delUserModal');
@@ -194,7 +194,7 @@ export class ChatBodyBase extends Block {
 
   private emptyFound() {
     store.set('foundUsers', []);
-    document.querySelectorAll('.found-users').forEach(item => item.innerHTML = '');
+    document.querySelectorAll('.found-users').forEach((item) => { item.innerHTML = ''; });
   }
 
   private choosedUser(event: Event) {
@@ -212,10 +212,11 @@ export class ChatBodyBase extends Block {
   sendMessage(event: Event) {
     event.preventDefault();
     let formSuccess = true;
-    let data: StringIndexed = {};
-    document.getElementById('newmessage')?.querySelectorAll('input')?.forEach(input => {
+    const data: StringIndexed = {};
+    document.getElementById('newmessage')?.querySelectorAll('input')?.forEach((input) => {
       if (!input.dataset.rule || input.dataset.rule === '' || typeof validation[input.dataset.rule] === 'undefined') {
         data[input.name] = input.value;
+
         return;
       }
       if (!focusOutById(input.id)) {
@@ -223,7 +224,7 @@ export class ChatBodyBase extends Block {
       } else {
         data[input.name] = input.value;
       }
-    })
+    });
     if (formSuccess) {
       MessageController.postMessage(this.props.currentChat, data.message);
     }
@@ -244,12 +245,12 @@ export class ChatBodyBase extends Block {
   }
 }
 
-const withChatBody = withStore(state => ({
+const withChatBody = withStore((state) => ({
   messages: { ...(state.messages || {}) },
   currentChat: state.currentChat || undefined,
   chat: state.chats.find((chat: any) => chat.id === state.currentChat),
   userId: state.user?.id,
-  foundUsers: state.foundUsers ?? []
+  foundUsers: state.foundUsers ?? [],
 }));
 
 export const ChatBody = withChatBody(ChatBodyBase);

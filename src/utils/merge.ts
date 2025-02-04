@@ -1,4 +1,4 @@
-import { PlainObject } from "../types/global";
+import { PlainObject } from '../types/global';
 
 function merge(lhs: PlainObject, rhs: PlainObject): PlainObject {
   for (const p in rhs) {

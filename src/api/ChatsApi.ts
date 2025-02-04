@@ -1,5 +1,5 @@
-import { IChatInfo, ID } from "../types/global";
-import BaseApi from "./BaseApi";
+import { IChatInfo, ID } from '../types/global';
+import BaseApi from './BaseApi';
 
 export class ChatsApi extends BaseApi {
   constructor() {
@@ -15,10 +15,10 @@ export class ChatsApi extends BaseApi {
   }
 
   delete(chatId: ID): Promise<unknown> {
-    return this.http.delete('', { chatId })
+    return this.http.delete('', { chatId });
   }
 
-  readChatToken(chatId: ID): Promise<{token: string}> {
+  readChatToken(chatId: ID): Promise<{ token: string }> {
     return this.http.post(`/token/${chatId}`);
   }
 

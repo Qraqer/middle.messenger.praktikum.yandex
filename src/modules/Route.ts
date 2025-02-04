@@ -9,17 +9,17 @@ export default class Route {
   private _props: StringIndexed;
 
   constructor(pathname: string, view: typeof Block, props: any) {
-      this._pathname = pathname;
-      this._blockClass = view;
-      this._block = null;
-      this._props = props;
+    this._pathname = pathname;
+    this._blockClass = view;
+    this._block = null;
+    this._props = props;
   }
 
   navigate(pathname: string) {
-      if (this.match(pathname)) {
-        this._pathname = pathname;
-        this.render();
-      }
+    if (this.match(pathname)) {
+      this._pathname = pathname;
+      this.render();
+    }
   }
 
   leave() {
@@ -27,7 +27,7 @@ export default class Route {
   }
 
   match(pathname: string) {
-      return pathname === this._pathname;
+    return pathname === this._pathname;
   }
 
   render() {

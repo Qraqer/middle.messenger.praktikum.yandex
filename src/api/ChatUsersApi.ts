@@ -1,5 +1,5 @@
-import { IUser } from "../types/global";
-import BaseApi from "./BaseApi";
+import { IUser } from '../types/global';
+import BaseApi from './BaseApi';
 
 type ID = string | number;
 

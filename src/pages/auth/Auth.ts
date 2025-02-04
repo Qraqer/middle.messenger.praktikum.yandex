@@ -53,7 +53,7 @@ export class Auth extends Block {
   submitAuth(event: Event) {
     event.preventDefault();
     let formSuccess = true;
-    let data: StringIndexed = {};
+    const data: StringIndexed = {};
     Object.values(this.children).forEach((child) => {
       if (!child.props.rule || child.props.rule === '' || typeof validation[child.props.rule] === 'undefined') {
         return;
@@ -70,14 +70,14 @@ export class Auth extends Block {
           chatsController.getList();
           router.go(Pages.Chatspage.url);
         })
-        .catch(error => {
+        .catch((error) => {
           if (error.reason === 'User already in system') {
             router.go(Pages.Chatspage.url);
           } else {
             alert('Ошибка авторизации!');
             console.log(error);
           }
-        })
+        });
     }
   }
 

@@ -14,7 +14,7 @@ import { Input } from '../../components/Input/Input';
 export class ChangePassword extends Block {
   constructor(props: Props) {
     super({
-      ...props
+      ...props,
     });
   }
 
@@ -37,7 +37,7 @@ export class ChangePassword extends Block {
         name: 'oldPassword',
         type: 'password',
         value: '',
-        rule: profileRules.oldpassword
+        rule: profileRules.oldpassword,
       }),
       newpsw: new Input({
         label: '',
@@ -45,7 +45,7 @@ export class ChangePassword extends Block {
         name: 'newPassword',
         type: 'password',
         value: '',
-        rule: profileRules.newpassword
+        rule: profileRules.newpassword,
       }),
       newpswrepeat: new Input({
         label: '',
@@ -53,7 +53,7 @@ export class ChangePassword extends Block {
         name: 'newPasswordRepeat',
         type: 'password',
         value: '',
-        rule: profileRules.newpassword
+        rule: profileRules.newpassword,
       }),
       button: new Button({
         id: 'profile-submit',
@@ -61,10 +61,10 @@ export class ChangePassword extends Block {
         link: Pages.Profile.url,
         class: 'btn',
         events: {
-          click: (event) => this.submitProfile(event as Event)
-        }
-      })
-    }
+          click: (event) => this.submitProfile(event as Event),
+        },
+      }),
+    };
   }
 
   submitProfile(event: Event) {
@@ -73,20 +73,22 @@ export class ChangePassword extends Block {
     const formResult: Record<string, any> = {};
     const inputs = document.getElementById('form-profile')?.querySelectorAll('input');
     inputs?.forEach((input, i) => {
-      const name = input.getAttribute('name') ?? 'name_' + i;
+      const name = input.getAttribute('name') ?? `name_${i}`;
       if (name === 'newPasswordRepeat' && input.value !== (document.getElementById('newPassword') as HTMLInputElement).value) {
         showErrorById(input, 'Введенные пароли (новый и повторный) не совпадают');
         submitSuccess = false;
+
         return;
       }
       if (!focusOutById(input.getAttribute('id') as string)) {
         submitSuccess = false;
+
         return;
       }
       if (name !== 'newPasswordRepeat') {
-        formResult[ name ] = input.value;
+        formResult[name] = input.value;
       }
-    })
+    });
 
     if (submitSuccess) {
       UserController.updatePassword(formResult as IPassword);
@@ -97,7 +99,7 @@ export class ChangePassword extends Block {
         setTimeout(() => {
           button.innerHTML = 'Сохранить';
           button.removeAttribute('disabled');
-          inputs?.forEach(input => input.value = '');
+          inputs?.forEach((input) => { input.value = ''; });
         }, 2000);
       }
     }

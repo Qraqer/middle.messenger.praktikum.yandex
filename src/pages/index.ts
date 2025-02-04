@@ -9,28 +9,28 @@ import { Register } from './register/Register';
 const Pages: StringIndexed = {
   Auth: {
     url: '/',
-    page: Auth
+    page: Auth,
   },
   Register: {
     url: '/sign-up',
-    page: Register
+    page: Register,
   },
   Profile: {
     url: '/settings',
-    page: Profile
+    page: Profile,
   },
   ProfileEdit: {
     url: '/settings-edit',
-    page: ChangeUser
+    page: ChangeUser,
   },
   ProfilePassword: {
     url: '/settings-password',
-    page: ChangePassword
+    page: ChangePassword,
   },
   Chatspage: {
     url: '/messenger',
-    page: Chatspage
+    page: Chatspage,
   },
-}
+};
 
 export default Pages;

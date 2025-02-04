@@ -1,16 +1,16 @@
-import UserController from "../../controllers/UserController";
-import { withStore } from "../../hoc/withStore";
-import Block from "../../modules/Block";
-import { Button } from "../Button/Button";
-import { FileInput } from "../FileInput/FileInput";
-import { Modal } from "../Modal/Modal";
+import UserController from '../../controllers/UserController';
+import { withStore } from '../../hoc/withStore';
+import Block from '../../modules/Block';
+import { Button } from '../Button/Button';
+import { FileInput } from '../FileInput/FileInput';
+import { Modal } from '../Modal/Modal';
 import tpl from './Avatar.tpl';
 
 class AvatarBase extends Block {
   constructor(props: any) {
     super({
-      ...props
-    })
+      ...props,
+    });
   }
 
   protected childrenInit() {
@@ -20,8 +20,8 @@ class AvatarBase extends Block {
         inner: '',
         class: 'avatar-button',
         events: {
-          click: () => this.showModal('avatarModal')
-        }
+          click: () => this.showModal('avatarModal'),
+        },
       }),
       avatarModal: new Modal({
         id: 'avatarModal',
@@ -50,15 +50,15 @@ class AvatarBase extends Block {
               event?.preventDefault();
               const data = new FormData();
               const fileInput = document.getElementById('avatar') as HTMLInputElement;
-              if (fileInput?.files?.length){
+              if (fileInput?.files?.length) {
                 data.append('avatar', fileInput.files[0]);
                 await UserController.updateAvatar(data);
               }
               this.closeModal('avatarModal');
             },
           },
-        })
-      })
+        }),
+      }),
     };
   }
 
@@ -75,10 +75,8 @@ class AvatarBase extends Block {
   }
 }
 
-const mapStateToProps = (state: any) => {
-  return {
-    avatar: state.user?.avatar ?? ''
-  };
-}
+const mapStateToProps = (state: any) => ({
+  avatar: state.user?.avatar ?? '',
+});
 
 export const Avatar = withStore(mapStateToProps)(AvatarBase);

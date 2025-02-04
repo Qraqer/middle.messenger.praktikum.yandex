@@ -1,4 +1,4 @@
-import { ChatUsersApi } from "../api/ChatUsersApi";
+import { ChatUsersApi } from '../api/ChatUsersApi';
 
 class ChatUsersController {
   private readonly api: ChatUsersApi;

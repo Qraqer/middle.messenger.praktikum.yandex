@@ -1,5 +1,5 @@
-import { IPassword, IUser, TUser } from "../types/global";
-import BaseApi from "./BaseApi";
+import { IPassword, IUser, TUser } from '../types/global';
+import BaseApi from './BaseApi';
 
 export class UserApi extends BaseApi {
   constructor() {

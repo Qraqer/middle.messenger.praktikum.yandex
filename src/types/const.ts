@@ -8,7 +8,7 @@ export const profileLabels: Record<string, any> = {
   phone: 'Телефон',
   oldpassword: 'Прежний пароль',
   newpassword: 'Новый пароль',
-}
+};
 
 export const profileRules: Record<string, any> = {
   login: 'login',
@@ -20,4 +20,4 @@ export const profileRules: Record<string, any> = {
   phone: 'phone',
   oldpassword: 'password',
   newpassword: 'password',
-}
+};

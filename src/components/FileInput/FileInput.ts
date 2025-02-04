@@ -1,4 +1,4 @@
-import Block from "../../modules/Block";
+import Block from '../../modules/Block';
 import tpl from './FileInput.tpl';
 
 interface IAvatar {
@@ -9,8 +9,8 @@ interface IAvatar {
 export class FileInput extends Block {
   constructor(props: IAvatar) {
     super({
-      ...props
-    })
+      ...props,
+    });
   }
 
   render() {

@@ -1,5 +1,5 @@
-import { ISignIn, ISignUp, IUser } from "../types/global";
-import BaseApi from "./BaseApi";
+import { ISignIn, ISignUp, IUser } from '../types/global';
+import BaseApi from './BaseApi';
 
 class AuthApi extends BaseApi {
   constructor() {
