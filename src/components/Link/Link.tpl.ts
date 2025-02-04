@@ -1,4 +1,4 @@
-export default `<a href="#" class="{{ class }}" data-link="{{ link }}">
-  {{{ text }}}
+export default `<a href="{{ link }}" class="{{ class }}" data-link="{{ link }}">
+  {{{ inner }}}
 </a>
 `;
