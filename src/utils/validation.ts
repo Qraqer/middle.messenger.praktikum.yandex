@@ -8,7 +8,7 @@ export const validation: Record<string, { regxp: RegExp, message: string }> = {
     message: 'Имеет длину от 3 до 20 символов, состоит из латинских букв, может содержать цифры, но не состоять из них, без пробелов, без спецсимволов (допустимы "-" и "_")',
   },
   email: {
-    regxp: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+    regxp: /^[\w+-.]+@([\w-]+\.)+[\w-]{2,4}$/,
     message: 'Состоит из латиницы, цифр, знаков "-" и "_"; содержит знак "@" и точку после него, перед и после точки должны быть буквы',
   },
   password: {
@@ -25,10 +25,10 @@ export const validation: Record<string, { regxp: RegExp, message: string }> = {
   },
 };
 
-const validateData = (input: string, rule: string) => {
+const validateData = (inputValue: string, rule: string) => {
   if (
     typeof validation[rule] === 'undefined'
-    || validation[rule].regxp.test(input)
+    || validation[rule].regxp.test(inputValue)
   ) {
     return true;
   }
@@ -53,6 +53,7 @@ export const showErrorById = (input: HTMLInputElement, message: string) => {
     errorElement.innerHTML = message;
     parent.appendChild(errorElement);
   }
+  setTimeout(() => parent.querySelector('.input__error')?.remove(), 3000);
 };
 
 const inputCommonTest = (input: HTMLInputElement) => {
@@ -89,10 +90,9 @@ const commonHideError = (parent: HTMLElement) => {
 };
 
 export const focusInById = (id: string) => {
-  const input = document.getElementById(id);
-  const parent = input?.parentElement?.parentElement;
+  const parent = document.getElementById(id)?.closest('.input__box'); // input?.parentElement?.parentElement;
   if (parent) {
-    parent.classList.add('is--active');
+    (parent as HTMLElement).classList.add('is--active');
     commonHideError(parent as HTMLElement);
   }
 };
