@@ -10,7 +10,7 @@ export class AuthController {
       await AuthApi.login(data);
       await this.fetchUser();
       router.go(Pages.Chatspage.url);
-    } catch(error) {
+    } catch (error) {
       console.error('Error in AuthController.login: ', error);
     }
   }
@@ -20,7 +20,7 @@ export class AuthController {
       await AuthApi.register(data);
       await this.fetchUser();
       router.go(Pages.Chatspage.url);
-    } catch(error) {
+    } catch (error) {
       console.error('Error in AuthController.register: ', error);
     }
   }
@@ -30,7 +30,7 @@ export class AuthController {
       await AuthApi.logout();
       store.set('user', undefined);
       router.go(Pages.Auth.url);
-    } catch(error) {
+    } catch (error) {
       console.error('Error in AuthController.logout: ', error);
     }
   }
@@ -39,7 +39,7 @@ export class AuthController {
     try {
       const user = await AuthApi.read();
       store.set('user', user);
-    } catch(error) {
+    } catch (error) {
       console.error('Error in AuthController.fetchUser: ', error);
     }
   }

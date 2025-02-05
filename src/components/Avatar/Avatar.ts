@@ -61,7 +61,7 @@ class AvatarBase extends Block {
                       AuthController.fetchUser();
                       fileInput.value = '';
                     })
-                    .catch(e => console.log('Ошибка добавления аватара к пользователю: ', e.reason));
+                    .catch((e) => console.log('Ошибка добавления аватара к пользователю: ', e.reason));
                 } else {
                   data.append('chatId', this.props.currentChat);
                   await chatsController.updateAvatar(data)
@@ -69,7 +69,7 @@ class AvatarBase extends Block {
                       chatsController.getList();
                       fileInput.value = '';
                     })
-                    .catch(e => console.log('Ошибка добавления аватара к чату: ', e, e.reason));
+                    .catch((e) => console.log('Ошибка добавления аватара к чату: ', e, e.reason));
                 }
               }
               this.closeModal('avatarModal');
@@ -100,10 +100,10 @@ const mapStateToProps = (state: IStore) => ({
 export const Avatar = withStore(mapStateToProps)(AvatarBase);
 
 export const UserAvatar = withStore((state: IStore) => ({
-  avatar: state.user?.avatar ?? ''
+  avatar: state.user?.avatar ?? '',
 }))(AvatarBase);
 
 export const ChatAvatar = withStore((state: IStore) => ({
   avatar: state.chats?.find((chat: IChatInfo) => chat.id === state.currentChat)?.avatar ?? '',
-  currentChat: state.currentChat
+  currentChat: state.currentChat,
 }))(AvatarBase);

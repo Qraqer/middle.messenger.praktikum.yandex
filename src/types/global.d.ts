@@ -18,7 +18,15 @@ export interface IStore {
   currentChat: number | undefined,
   messages: Record<number, IMessage[]>,
   users: TChatUser[],
-  foundUsers?: IUser[]
+  foundUsers?: IUser[],
+  chatUsers?: IUser[]
+}
+
+export interface ICheckbox {
+  name: string;
+  id: string;
+  value: string;
+  label: string;
 }
 
 export interface IProfileEdit {

@@ -42,6 +42,7 @@ class UserController {
       return users;
     } catch (error) {
       console.error('Error in UserController.: ', error);
+
       return false;
     }
   }

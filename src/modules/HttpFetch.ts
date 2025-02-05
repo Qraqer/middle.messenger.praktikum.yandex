@@ -1,4 +1,4 @@
-import { StringIndexed } from "../types/global";
+import { StringIndexed } from '../types/global';
 
 const METHODS = {
   GET: 'GET',

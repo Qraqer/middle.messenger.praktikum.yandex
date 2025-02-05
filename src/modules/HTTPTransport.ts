@@ -27,21 +27,13 @@ export default class HTTPTransport {
     this.url = `${this.API}${url}`;
   }
 
-  public get: HTTPMethod = (url = '', data = {}) => {
-    return this.request(this.url + url, { method: METHODS.GET, data });
-  }
+  public get: HTTPMethod = (url = '', data = {}) => this.request(this.url + url, { method: METHODS.GET, data });
 
-  public put: HTTPMethod = (url, data = {}) => {
-    return this.request(this.url + url, { method: METHODS.PUT, data });
-  }
+  public put: HTTPMethod = (url, data = {}) => this.request(this.url + url, { method: METHODS.PUT, data });
 
-  public post: HTTPMethod = (url, data = {}) => {
-    return this.request(this.url + url, { method: METHODS.POST, data });
-  }
+  public post: HTTPMethod = (url, data = {}) => this.request(this.url + url, { method: METHODS.POST, data });
 
-  public delete: HTTPMethod = (url, data = {}) => {
-    return this.request(this.url + url, { method: METHODS.DELETE, data });
-  }
+  public delete: HTTPMethod = (url, data = {}) => this.request(this.url + url, { method: METHODS.DELETE, data });
 
   private request<Response>(url: string, options: IOptions): Promise<Response> {
     const { method, data } = options;
