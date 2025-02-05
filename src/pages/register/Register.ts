@@ -4,6 +4,11 @@ import { Input } from '../../components/Input/Input';
 import { Button } from '../../components/Button/Button';
 import { Link } from '../../components/Link/Link';
 import { validation, focusOutById, showErrorById } from '../../utils/validation';
+import { router } from '../../modules/Router';
+import { ISignUp, StringIndexed } from '../../types/global';
+import { AuthController } from '../../controllers/AuthController';
+import chatsController from '../../controllers/ChatsController';
+import Pages from '..';
 
 export class Register extends Block {
   constructor() {
@@ -65,22 +70,24 @@ export class Register extends Block {
         type: 'password',
       }),
       button: new Button({
-        text: 'Зарегистрироваться',
+        inner: 'Зарегистрироваться',
         class: 'btn',
         id: 'submit-register',
-        link: 'chatlist',
+        link: '/chatlist',
         type: 'submit',
       }),
       link: new Link({
         class: 'align_center',
-        link: 'login',
-        text: 'Войти',
+        link: '/',
+        inner: 'Войти',
       }),
     };
   }
 
   submitAuth(event: Event) {
     event.preventDefault();
+    let formSuccess = true;
+    const data: StringIndexed = {};
     Object.values(this.children).forEach((child) => {
       if (child.id === 'password_check') {
         const passwordInput = document.getElementById('password') as HTMLInputElement;
@@ -92,10 +99,34 @@ export class Register extends Block {
         if (!child.props.rule || child.props.rule === '' || typeof validation[child.props.rule] === 'undefined') {
           return;
         }
-        focusOutById(child.id);
+        if (!focusOutById(child.id)) {
+          formSuccess = false;
+        } else {
+          data[child.props.name] = (document.getElementById(child.props.id) as HTMLInputElement)?.value;
+        }
       }
     });
-    console.log('Success');
+    if (formSuccess) {
+      console.log('submitAuth', data);
+      AuthController.register(data as ISignUp)
+        .then(() => {
+          chatsController.getList();
+          router.go(Pages.Chatspage.url);
+        })
+        .catch((error) => {
+          if (error.reason === 'User already in system') {
+            router.go(Pages.Chatspage.url);
+          } else {
+            alert('Ошибка авторизации!');
+            console.log(error);
+          }
+        });
+    }
+  }
+
+  componentDidMount(): void {
+    AuthController.fetchUser()
+      .then(() => router.go(Pages.Chatspage.url));
   }
 
   protected render() {

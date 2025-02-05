@@ -1,3 +1,5 @@
+import { StringIndexed } from '../types/global';
+
 const METHODS = {
   GET: 'GET',
   POST: 'POST',
@@ -5,7 +7,7 @@ const METHODS = {
   DELETE: 'DELETE',
 };
 
-function queryStringify(data: Record<string, any>) {
+function queryStringify(data: StringIndexed) {
   if (typeof data !== 'object') {
     throw new Error('Data must be object');
   }
@@ -24,7 +26,7 @@ export class HttpFetch {
   post = (url: string, options = {}) => this.request(url, { ...options, method: METHODS.POST });
   delete = (url: string, options = {}) => this.request(url, { ...options, method: METHODS.DELETE });
 
-  request = (url: string, options: Record<string, any>, timeout: number = 5000) => {
+  request = (url: string, options: StringIndexed, timeout: number = 5000) => {
     const { method, data, headers = {} } = options;
 
     return new Promise((resolve, reject) => {

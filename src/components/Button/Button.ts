@@ -6,7 +6,10 @@ interface IButtonProps {
   class: string,
   link?: string,
   type?: string,
-  text: string,
+  inner: string,
+  events?: {
+    click?: (e?: Event) => void;
+  },
 }
 
 export class Button extends Block {
@@ -20,7 +23,7 @@ export class Button extends Block {
     const props: IButtonProps = {
       id: this.props.id,
       class: this.props.class,
-      text: this.props.text,
+      inner: this.props.inner,
     };
     if (this.props.link) {
       props.link = this.props.link;

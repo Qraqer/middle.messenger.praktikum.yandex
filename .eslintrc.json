@@ -24,6 +24,11 @@
     "consistent-return": "off",
     "import/no-cycle": "off",
     "prefer-promise-reject-errors": "off",
+    "array-callback-return": "off",
+    "no-constructor-return": "off",
+    "no-restricted-syntax": "off",
+    "no-prototype-builtins": "off",
+    "no-continue": "off",
     "no-alert": "off",
     "no-console": "off"
   }
