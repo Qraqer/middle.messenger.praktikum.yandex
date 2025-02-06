@@ -52,6 +52,7 @@ export class ChatHead extends Block {
           id: 'cancel',
           class: 'btn btn__cancel',
           inner: 'Отменить',
+          type: 'button',
           events: {
             click: (event) => this.closeModal(event as Event),
           },
@@ -60,10 +61,17 @@ export class ChatHead extends Block {
           id: 'submit',
           class: 'btn btn__submit',
           inner: 'Создать',
+          type: 'submit',
           events: {
             click: (event) => this.createChat(event as Event),
           },
         }),
+        events: {
+          submit: (event: unknown) => {
+            console.log('Create');
+            this.createChat(event as Event);
+          },
+        },
       }),
     };
   }

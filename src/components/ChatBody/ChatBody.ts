@@ -126,6 +126,7 @@ export class ChatBodyBase extends Block {
         cancel: new Button({
           id: 'cancel',
           class: 'btn btn__cancel',
+          type: 'button',
           inner: 'Отменить',
           events: {
             click: (event) => {
@@ -137,22 +138,21 @@ export class ChatBodyBase extends Block {
         submit: new Button({
           id: 'submit',
           class: 'btn btn__submit',
+          type: 'submit',
           inner: 'Добавить',
           events: {
             click: async (event) => {
               event?.preventDefault();
-              const input = (document.getElementById('add-user') as HTMLInputElement);
-              const userId = input?.dataset?.id;
-              if (userId) {
-                input.value = '';
-                await chatUsersController.addUsers(this.props.currentChat, [parseInt(userId, 10)])
-                  .then(() => chatUsersController.getChatUsers(this.props.currentChat))
-                  .catch((e) => console.error('Ошибка добавления пользователя: ', e.reason));
-              }
-              this.closeModal('addUserModal');
+              this.addUserHandler();
             },
           },
         }),
+        events: {
+          submit: (event: unknown) => {
+            (event as Event)?.preventDefault();
+            this.addUserHandler();
+          },
+        },
       }),
       delUserModal: new Modal({
         id: 'delUserModal',
@@ -161,6 +161,7 @@ export class ChatBodyBase extends Block {
         cancel: new Button({
           id: 'cancel',
           class: 'btn btn__cancel',
+          type: 'button',
           inner: 'Отменить',
           events: {
             click: (event) => {
@@ -172,25 +173,21 @@ export class ChatBodyBase extends Block {
         submit: new Button({
           id: 'submit',
           class: 'btn btn__submit',
+          type: 'submit',
           inner: 'Удалить',
           events: {
             click: async (event) => {
               event?.preventDefault();
-              const inputValues: number[] = [];
-              document.getElementById('delUserModal')?.querySelectorAll('input[type="checkbox"]')?.forEach((input) => {
-                if ((input as HTMLInputElement).checked) {
-                  inputValues.push(parseInt((input as HTMLInputElement).value, 10));
-                }
-              });
-              if (inputValues.length) {
-                await chatUsersController.deleteUsers(this.props.currentChat, inputValues)
-                  .then(() => chatUsersController.getChatUsers(this.props.currentChat))
-                  .catch((e) => console.error('Ошибка удаления пользователя(ей): ', e.reason));
-              }
-              this.closeModal('delUserModal');
+              this.delUserHandler();
             },
           },
         }),
+        events: {
+          submit: (event: unknown) => {
+            (event as Event)?.preventDefault();
+            this.delUserHandler();
+          },
+        },
       }),
       delChatModal: new Modal({
         id: 'delChatModal',
@@ -199,6 +196,7 @@ export class ChatBodyBase extends Block {
         cancel: new Button({
           id: 'cancel',
           class: 'btn btn__cancel',
+          type: 'button',
           inner: 'Отменить',
           events: {
             click: (event) => {
@@ -210,22 +208,60 @@ export class ChatBodyBase extends Block {
         submit: new Button({
           id: 'submit',
           class: 'btn btn__submit',
+          type: 'submit',
           inner: 'Удалить',
           events: {
             click: async (event) => {
               event?.preventDefault();
-              chatsController.deleteChat(this.props.currentChat)
-                .then(() => {
-                  store.set('currentChat', null);
-                  chatsController.getList();
-                })
-                .catch((e) => console.log('Ошибка удаления чата: ', e.reason));
-              this.closeModal('delChatModal');
+              this.delChatHandler();
             },
           },
         }),
+        events: {
+          submit: (event: unknown) => {
+            (event as Event)?.preventDefault();
+            this.delChatHandler();
+          },
+        },
       }),
     };
+  }
+
+  private async addUserHandler() {
+    const input = (document.getElementById('add-user') as HTMLInputElement);
+    const userId = input?.dataset?.id;
+    if (userId) {
+      input.value = '';
+      await chatUsersController.addUsers(this.props.currentChat, [parseInt(userId, 10)])
+        .then(() => chatUsersController.getChatUsers(this.props.currentChat))
+        .catch((e) => console.error('Ошибка добавления пользователя: ', e.reason));
+    }
+    this.closeModal('addUserModal');
+  }
+
+  private async delUserHandler() {
+    const inputValues: number[] = [];
+    document.getElementById('delUserModal')?.querySelectorAll('input[type="checkbox"]')?.forEach((input) => {
+      if ((input as HTMLInputElement).checked) {
+        inputValues.push(parseInt((input as HTMLInputElement).value, 10));
+      }
+    });
+    if (inputValues.length) {
+      await chatUsersController.deleteUsers(this.props.currentChat, inputValues)
+        .then(() => chatUsersController.getChatUsers(this.props.currentChat))
+        .catch((e) => console.error('Ошибка удаления пользователя(ей): ', e.reason));
+    }
+    this.closeModal('delUserModal');
+  }
+
+  private delChatHandler() {
+    chatsController.deleteChat(this.props.currentChat)
+      .then(() => {
+        store.set('currentChat', null);
+        chatsController.getList();
+      })
+      .catch((e) => console.log('Ошибка удаления чата: ', e.reason));
+    this.closeModal('delChatModal');
   }
 
   private emptyFound() {
