@@ -76,8 +76,9 @@ export interface IModal {
   id: string;
   title: string;
   content: Block;
-  cancel: Block;
+  cancel?: Block;
   submit: Block;
+  events?: Record<string, any>
 }
 
 export interface IChatInfo {

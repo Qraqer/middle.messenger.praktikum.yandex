@@ -36,6 +36,7 @@ class AvatarBase extends Block {
         cancel: new Button({
           id: 'cancel',
           class: 'btn btn__cancel',
+          type: 'button',
           inner: 'Отменить',
           events: {
             click: (event) => {
@@ -47,37 +48,48 @@ class AvatarBase extends Block {
         submit: new Button({
           id: 'submit',
           class: 'btn btn__submit',
+          type: 'submit',
           inner: 'Добавить',
           events: {
-            click: async (event) => {
+            click: (event) => {
               event?.preventDefault();
-              const data = new FormData();
-              const fileInput = document.getElementById('avatar') as HTMLInputElement;
-              if (fileInput?.files?.length) {
-                data.append('avatar', fileInput.files[0]);
-                if (!this.props.currentChat) {
-                  await UserController.updateAvatar(data)
-                    .then(() => {
-                      AuthController.fetchUser();
-                      fileInput.value = '';
-                    })
-                    .catch((e) => console.log('Ошибка добавления аватара к пользователю: ', e.reason));
-                } else {
-                  data.append('chatId', this.props.currentChat);
-                  await chatsController.updateAvatar(data)
-                    .then(() => {
-                      chatsController.getList();
-                      fileInput.value = '';
-                    })
-                    .catch((e) => console.log('Ошибка добавления аватара к чату: ', e, e.reason));
-                }
-              }
-              this.closeModal('avatarModal');
+              this.sendAvatar();
             },
           },
         }),
+        events: {
+          submit: (event: unknown) => {
+            (event as Event)?.preventDefault();
+            this.sendAvatar();
+          },
+        },
       }),
     };
+  }
+
+  private async sendAvatar() {
+    const data = new FormData();
+    const fileInput = document.getElementById('avatar') as HTMLInputElement;
+    if (fileInput?.files?.length) {
+      data.append('avatar', fileInput.files[0]);
+      if (!this.props.currentChat) {
+        await UserController.updateAvatar(data)
+          .then(() => {
+            AuthController.fetchUser();
+            fileInput.value = '';
+          })
+          .catch((e) => console.log('Ошибка добавления аватара к пользователю: ', e.reason));
+      } else {
+        data.append('chatId', this.props.currentChat);
+        await chatsController.updateAvatar(data)
+          .then(() => {
+            chatsController.getList();
+            fileInput.value = '';
+          })
+          .catch((e) => console.log('Ошибка добавления аватара к чату: ', e, e.reason));
+      }
+    }
+    this.closeModal('avatarModal');
   }
 
   showModal(id: string) {
