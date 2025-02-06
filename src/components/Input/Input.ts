@@ -10,6 +10,7 @@ interface IInputProps {
   placeholder?: string,
   value?: string,
   rule?: string,
+  events?: unknown
 }
 
 export class Input extends Block<IInputProps> {
@@ -19,6 +20,7 @@ export class Input extends Block<IInputProps> {
       events: {
         focusout: () => focusOutById(this.props.id),
         focusin: () => focusInById(this.props.id),
+        ...(props.events ?? {}),
       },
     });
   }

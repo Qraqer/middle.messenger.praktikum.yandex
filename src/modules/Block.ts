@@ -1,8 +1,8 @@
 import Handlebars from 'handlebars';
 import EventBus from './EventBus';
-import { Props } from '../types/global';
+import { Props, StringIndexed } from '../types/global';
 
-export default class Block<P extends Record<string, any> = any> {
+export default class Block<P extends StringIndexed = any> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -30,12 +30,14 @@ export default class Block<P extends Record<string, any> = any> {
     eventBus.emit(Block.EVENTS.INIT);
   }
 
-  getChildren(propsAndChildren: Props<P>): { props: Props<P>, children: Record<string, Block> } {
-    const children: Record<string, Block> = {};
+  getChildren(propsAndChildren: Props<P>): { props: Props<P>, children: Record<string, Block> | Record<string, Block[]> } {
+    const children: Record<string, Block> | Record<string, Block[]> = {};
     const props: Record<string, unknown> = {};
 
     Object.entries(propsAndChildren).forEach(([key, value]) => {
       if (value instanceof Block) {
+        children[key] = value;
+      } else if (Array.isArray(value) && value.every((v) => v instanceof Block)) {
         children[key] = value;
       } else {
         props[key] = value;
@@ -87,7 +89,12 @@ export default class Block<P extends Record<string, any> = any> {
     this.componentDidMount();
   }
 
-  componentDidMount() {}
+  protected componentDidMount() {
+  }
+
+  dispatchComponentDidMount() {
+    this.eventBus().emit(Block.EVENTS.FLOW_CDM);
+  }
 
   private _componentDidUpdate(oldProps: Props, newProps: Props): void {
     const response = this.componentDidUpdate(oldProps, newProps);
@@ -96,7 +103,7 @@ export default class Block<P extends Record<string, any> = any> {
     }
   }
 
-  componentDidUpdate(oldProps: Props, newProps: Props) {
+  protected componentDidUpdate(oldProps: Props, newProps: Props) {
     return (oldProps && newProps);
   }
 
@@ -148,7 +155,7 @@ export default class Block<P extends Record<string, any> = any> {
     return document.createElement(tagName);
   }
 
-  compile(templateString: string, context: Record<string, any>) {
+  compile(templateString: string, context: StringIndexed) {
     const contextAndStubs = { ...context };
 
     Object.entries(this.children).forEach(([name, child]) => {
@@ -199,52 +206,16 @@ export default class Block<P extends Record<string, any> = any> {
     return block.content;
   }
 
-  /* compile(template: (ctx: any) => string, context: Record<string, any>) {
-    const contextAndStubs = { ...context };
-
-    Object.entries(this.children).forEach(([name, child]) => {
-      if (Array.isArray(child)) {
-        contextAndStubs[name] = child.map((ch) => `<div data-id=id-${ch.id}></div>`);
-
-        return;
-      }
-
-      contextAndStubs[name] = `<div data-id=id-${child.id}></div>`;
-    });
-
-    const block = this._createElement('template') as HTMLTemplateElement;
-
-    block.innerHTML = template(contextAndStubs);
-
-    Object.values(this.children).forEach(child => {
-      if (Array.isArray(child)) {
-        child.forEach((ch) => {
-          const stub = block.content.querySelector(`[data-id='id-${ch.id}']`);
-
-          if (stub) {
-            stub.replaceWith(ch.getContent() as HTMLDivElement);
-          }
-        });
-
-        return block.content;
-      }
-
-      const stub = block.content.querySelector(`[data-id='id-${child.id}']`);
-
-      if (!stub) {
-        return;
-      }
-
-      stub.replaceWith(child.getContent()!);
-
-      return;
-    });
-
-    return block.content;
-  } */
-
   getContent() {
     return this._element;
+  }
+
+  show() {
+    this.getContent()!.style.display = 'block';
+  }
+
+  hide() {
+    this.getContent()!.style.display = 'none';
   }
 
   get element() {
