@@ -51,7 +51,7 @@ class AvatarBase extends Block {
           type: 'submit',
           inner: 'Добавить',
           events: {
-            click: (event) => {
+            click: async (event) => {
               event?.preventDefault();
               const data = new FormData();
               const fileInput = document.getElementById('avatar') as HTMLInputElement;
@@ -75,7 +75,6 @@ class AvatarBase extends Block {
                 }
               }
               this.closeModal('avatarModal');
-
             },
           },
         }),

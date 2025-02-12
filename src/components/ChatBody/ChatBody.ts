@@ -220,7 +220,6 @@ export class ChatBodyBase extends Block {
                 })
                 .catch((e) => console.log('Ошибка удаления чата: ', e.reason));
               this.closeModal('delChatModal');
-
             },
           },
         }),
