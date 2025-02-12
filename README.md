@@ -15,6 +15,8 @@
 - Шина событий
 - Websockets
 - HTTP
+- Unit-тестирование (mocha, chai, sinon)
+- Pre-commit (husky)
 
 ## Дизайн
 
@@ -28,6 +30,7 @@ https://www.figma.com/file/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?node-id=0%3
 - Запустить проект на localhost: `npm run start`
 - Проверка ESLint: `npm run lint:ts`
 - Проверка Styleint: `npm run lint:style`
+- Unit-тестирование: `npm run test`
 
 ## Ссылки
 
