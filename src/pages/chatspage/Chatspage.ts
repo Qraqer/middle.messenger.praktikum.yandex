@@ -17,7 +17,7 @@ export class Chatspage extends Block {
     checkUser();
     try {
       chatsController.getList();
-    } catch(error) {
+    } catch (error) {
       console.log('Ошибка : ', error);
     }
   }

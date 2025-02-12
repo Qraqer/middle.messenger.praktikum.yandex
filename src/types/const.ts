@@ -1,4 +1,4 @@
-import { StringIndexed } from "./global";
+import { StringIndexed } from './global';
 
 export const profileLabels: StringIndexed = {
   login: 'Логин',

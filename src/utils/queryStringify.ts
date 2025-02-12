@@ -1,4 +1,4 @@
-import { StringIndexed } from "../types/global";
+import { StringIndexed } from '../types/global';
 
 export default function queryStringify(data: StringIndexed): string {
   if (typeof data !== 'object') {

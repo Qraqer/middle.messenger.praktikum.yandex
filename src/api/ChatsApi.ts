@@ -7,7 +7,7 @@ export class ChatsApi extends BaseApi {
   }
 
   read(): Promise<IChatInfo[]> {
-    return this.http.get();
+    return this.http.get('');
   }
 
   create(title: string) {

@@ -1,6 +1,6 @@
 import { ChatsApi } from '../api/ChatsApi';
 import store from '../modules/Store';
-import { ID } from '../types/global';
+import { IChatInfo, ID } from '../types/global';
 import MessageController from './MessageController';
 
 class ChatsController {
@@ -51,8 +51,9 @@ class ChatsController {
   async updateAvatar(data: FormData) {
     try {
       const chatData = await this.api.updateAvatar(data);
-      store.set('chats', store.getState().chats.map(chat => {
-        if (chat.id === chatData.id) return chatData;
+      store.set('chats', store.getState().chats.map((chat) => {
+        if (chat.id === (chatData as IChatInfo).id) return chatData;
+
         return chat;
       }));
     } catch (error) {
@@ -67,9 +68,11 @@ class ChatsController {
   async getToken(chatId: ID) {
     try {
       const { token } = await this.api.readChatToken(chatId);
+
       return token;
     } catch (error) {
       console.error('Error in ChatsController.getToken: ', error);
+
       return false;
     }
   }

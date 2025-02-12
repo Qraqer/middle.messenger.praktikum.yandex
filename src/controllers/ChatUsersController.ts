@@ -9,27 +9,30 @@ class ChatUsersController {
 
   async getChatUsers(chatId: string) {
     try {
-      return this.api.getUsers(chatId);
+      return await this.api.getUsers(chatId);
     } catch (error) {
       console.error('Error in ChatUsersController.: ', error);
+
       return false;
     }
   }
 
   async addUsers(chatId: number, userId: number[]) {
     try {
-      return this.api.addUsers(chatId, userId);
+      return await this.api.addUsers(chatId, userId);
     } catch (error) {
       console.error('Error in ChatUsersController.: ', error);
+
       return false;
     }
   }
 
   async deleteUsers(chatId: number, userId: number[]) {
     try {
-      return this.api.deleteUsers(chatId, userId);
+      return await this.api.deleteUsers(chatId, userId);
     } catch (error) {
       console.error('Error in ChatUsersController.: ', error);
+
       return false;
     }
   }

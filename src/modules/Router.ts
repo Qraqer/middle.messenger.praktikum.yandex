@@ -3,7 +3,7 @@ import Route from './Route';
 export default class Router {
   private static _instance: Router;
   private routes: Route[] = [];
-  private history: unknown = window.history;
+  private history: History = window.history;
   private _currentRoute: Route | null = null;
   private _rootQuery: string = '#app';
 
@@ -74,6 +74,11 @@ export default class Router {
 
   public getRoute(pathname: string) {
     return this.routes.find((route) => route.match(pathname));
+  }
+
+  public unset() {
+    this.routes = [];
+    this._currentRoute = null;
   }
 }
 

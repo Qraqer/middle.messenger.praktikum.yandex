@@ -211,7 +211,7 @@ export class ChatBodyBase extends Block {
       delChatModal: new Modal({
         id: 'delChatModal',
         title: 'Удалить чат',
-        content: new TextBlock({ inner: 'Вы действительно хотите удалить данный чат?'}),
+        content: new TextBlock({ inner: 'Вы действительно хотите удалить данный чат?' }),
         cancel: new Button({
           id: 'cancel',
           class: 'btn btn__cancel',
@@ -235,7 +235,7 @@ export class ChatBodyBase extends Block {
                   store.set('currentChat', null);
                   chatsController.getList();
                 })
-                .catch(e => console.log('Ошибка удаления чата: ', e.reason));
+                .catch((e) => console.log('Ошибка удаления чата: ', e.reason));
               this.closeModal('delChatModal');
             },
           },
@@ -268,6 +268,7 @@ export class ChatBodyBase extends Block {
     document.getElementById('newmessage')?.querySelectorAll('input')?.forEach((input) => {
       if (!input.dataset.rule || input.dataset.rule === '' || typeof validation[input.dataset.rule] === 'undefined') {
         data[input.name] = input.value;
+
         return;
       }
       if (!focusOutById(input.id)) {
