@@ -1,4 +1,5 @@
 import { ChatUsersApi } from '../api/ChatUsersApi';
+import store from '../modules/Store';
 
 class ChatUsersController {
   private readonly api: ChatUsersApi;
