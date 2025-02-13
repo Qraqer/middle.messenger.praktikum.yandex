@@ -213,7 +213,13 @@ export class ChatBodyBase extends Block {
           events: {
             click: async (event) => {
               event?.preventDefault();
-              this.delChatHandler();
+              chatsController.deleteChat(this.props.currentChat)
+                .then(() => {
+                  store.set('currentChat', null);
+                  chatsController.getList();
+                })
+                .catch((e) => console.log('Ошибка удаления чата: ', e.reason));
+              this.closeModal('delChatModal');
             },
           },
         }),

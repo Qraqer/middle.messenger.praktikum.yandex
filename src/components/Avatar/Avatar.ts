@@ -51,9 +51,30 @@ class AvatarBase extends Block {
           type: 'submit',
           inner: 'Добавить',
           events: {
-            click: (event) => {
+            click: async (event) => {
               event?.preventDefault();
-              this.sendAvatar();
+              const data = new FormData();
+              const fileInput = document.getElementById('avatar') as HTMLInputElement;
+              if (fileInput?.files?.length) {
+                data.append('avatar', fileInput.files[0]);
+                if (!this.props.currentChat) {
+                  await UserController.updateAvatar(data)
+                    .then(() => {
+                      AuthController.fetchUser();
+                      fileInput.value = '';
+                    })
+                    .catch((e) => console.log('Ошибка добавления аватара к пользователю: ', e.reason));
+                } else {
+                  data.append('chatId', this.props.currentChat);
+                  await chatsController.updateAvatar(data)
+                    .then(() => {
+                      chatsController.getList();
+                      fileInput.value = '';
+                    })
+                    .catch((e) => console.log('Ошибка добавления аватара к чату: ', e, e.reason));
+                }
+              }
+              this.closeModal('avatarModal');
             },
           },
         }),

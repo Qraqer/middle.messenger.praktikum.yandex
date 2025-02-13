@@ -1,5 +1,4 @@
 import { ChatUsersApi } from '../api/ChatUsersApi';
-import store from '../modules/Store';
 
 class ChatUsersController {
   private readonly api: ChatUsersApi;
@@ -10,10 +9,7 @@ class ChatUsersController {
 
   async getChatUsers(chatId: string) {
     try {
-      const chatUsers = await this.api.getUsers((chatId));
-      store.set('chatUsers', chatUsers);
-
-      return chatUsers;
+      return await this.api.getUsers(chatId);
     } catch (error) {
       console.error('Error in ChatUsersController.: ', error);
 
